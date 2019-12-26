@@ -19,9 +19,9 @@ public class PatternUtils {
      */
     private static final String REGEX_USER_SMS_CODE = "^\\d{6}$";
     /**
-     * 校验用户名（2-40位字符，可为字母或数字或下划线）
+     * 校验用户名（2-40位字符，可为字母或数字）
      */
-    private static final String REGEX_USER_USERNAME = "^[A-Za-z0-9_]{2,40}$";
+    private static final String REGEX_USER_USERNAME = "^[A-Za-z0-9]{2,40}$";
     /**
      * 校验密码（6-20位字符，可为字母或数字）
      */

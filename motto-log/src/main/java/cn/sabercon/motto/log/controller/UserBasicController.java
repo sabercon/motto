@@ -75,9 +75,13 @@ public class UserBasicController {
     }
 
     @ApiOperation("修改密码")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "password", value = "新密码"),
+            @ApiImplicitParam(name = "smsCode", value = "手机号验证码")
+    })
     @PostMapping("password")
-    public CommonResult updatePassword(UserBasicDto userBasicDto) {
-        service.updatePassword(userBasicDto);
+    public CommonResult updatePassword(String password, String smsCode) {
+        service.updatePassword(password, smsCode);
         // 退出登录
         return logout();
     }

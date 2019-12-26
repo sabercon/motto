@@ -140,14 +140,14 @@ public class UserBasicService {
         smsHelper.sendCode(phone, prefix);
     }
 
-    public void updatePassword(UserBasicDto userBasicDto) {
+    public void updatePassword(String password, String smsCode) {
         // 校验参数
-        PatternUtils.checkPassword(userBasicDto.getPassword());
-        PatternUtils.checkSmsCode(userBasicDto.getSmsCode());
+        PatternUtils.checkPassword(password);
+        PatternUtils.checkSmsCode(smsCode);
         UserBasic user = getUser();
-        matchSmsCode(user.getPhone(), userBasicDto.getSmsCode(), SMS_UPDATE_PREFIX);
+        matchSmsCode(user.getPhone(), smsCode, SMS_UPDATE_PREFIX);
         // 更新密码
-        user.setPassword(SecureUtil.md5(userBasicDto.getPassword()));
+        user.setPassword(SecureUtil.md5(password));
         repository.save(user);
         // controller中退出登录
     }

@@ -39,4 +39,7 @@ aliyun:
     accessKeySecret: YLXDCGqwn2GzzrQBjIcTRg1gIWDIk9
     signName: SaberCon # 签名名称
     templateCode: SMS_175480786 # 模板CODE
+motto:
+  user:
+    defaultAvatar: https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png # 默认头像
 

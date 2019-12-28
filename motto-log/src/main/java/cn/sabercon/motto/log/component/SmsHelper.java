@@ -93,12 +93,11 @@ public class SmsHelper {
             }
         } catch (ClientException | RuntimeException e) {
             log.warn("error when sending smsCode, phone number:{}", phone);
-            throw new CommonException(ErrorCode.SMS_SEND_ERROR);
+            throw new CommonException(ErrorCode.SMS_SENDING_ERROR);
         }
 
         // 保存验证码到redis中，保存时间五分钟
         redisTemplate.opsForValue().set(prefix + phone, code, 5, TimeUnit.MINUTES);
         log.info("success for sending smsCode, phone number:{}, code:{}", phone, code);
     }
-
 }

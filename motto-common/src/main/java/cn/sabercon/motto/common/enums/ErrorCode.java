@@ -17,10 +17,10 @@ import javax.annotation.Nonnull;
 public enum ErrorCode {
 
     // 通用操作码
-    FAIL(50000,"fail"),
+    FAIL(50000,"network error"),
     UNAUTHORIZED(40001, "unauthorized user"),
     // 用户相关
-    SMS_SEND_ERROR(40011, "error when sending sms code"),
+    SMS_SENDING_ERROR(40011, "error when sending sms code"),
     SMS_CODE_WRONG(40012, "sms code is wrong"),
     USERNAME_EXISTS(40013, "username is already used"),
     PHONE_EXISTS(40014, "phone number is already bound"),

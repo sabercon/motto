@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSON;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +42,8 @@ public class UserBasicService {
     private StringRedisTemplate redisTemplate;
     @Autowired
     private SmsHelper smsHelper;
+    @Value("${motto.user.defaultAvatar}")
+    private String defaultAvatar;
 
     /**
      * 表示手机是否处于可换绑状态的redis键前缀
@@ -91,6 +94,7 @@ public class UserBasicService {
         UserDetail userDetail = new UserDetail();
         userDetail.setUserId(user.getId());
         userDetail.setNickname(userBasicDto.getUsername());
+        userDetail.setAvatar(defaultAvatar);
         userDetailRepository.save(userDetail);
     }
 

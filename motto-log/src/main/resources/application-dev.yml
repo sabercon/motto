@@ -6,6 +6,9 @@ logging:
   level:
     web: debug
 spring:
+  servlet:
+    multipart:
+      max-file-size: 100MB
   datasource:
     url: jdbc:mysql://localhost:3306/motto?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: root
@@ -23,16 +26,16 @@ spring:
 aliyun:
   # OSS相关配置信息
   oss:
+    accessKeyId: LTAIFCfcNOj1amZh # 访问身份验证中用到用户标识
+    accessKeySecret: YLXDCGqwn2GzzrQBjIcTRg1gIWDIk9 # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
     endpoint: oss-cn-shenzhen.aliyuncs.com # oss对外服务的访问域名
-    accessKeyId: test # 访问身份验证中用到用户标识
-    accessKeySecret: test # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
-    bucketName: macro-oss # oss的存储空间
-    maxSize: 10 # 上传文件大小(M)
-    callback: http://localhost:8080/aliyun/oss/callback # 文件上传成功后的回调地址
-    policy:
-      expire: 300 # 签名有效期(S)
+    bucketName: motto # oss的存储空间
+    maxSize: 100 # 上传文件大小(M)
     dir:
-      prefix: motto/images/ # 上传文件夹路径前缀
+      avatar: user/avatar/
+      diaryImg: diary/img/
+      pic: resource/pic/
+      file: resource/file/
   # 阿里短信配置信息
   sms:
     accessKeyId: LTAIFCfcNOj1amZh
@@ -41,5 +44,5 @@ aliyun:
     templateCode: SMS_175480786 # 模板CODE
 motto:
   user:
-    defaultAvatar: https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png # 默认头像
+    defaultAvatar: https://motto.oss-cn-shenzhen.aliyuncs.com/user/avatar/takagi.jpg # 默认头像
 

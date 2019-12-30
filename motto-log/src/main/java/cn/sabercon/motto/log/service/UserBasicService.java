@@ -82,15 +82,15 @@ public class UserBasicService {
         PatternUtils.checkPhone(userBasicDto.getPhone());
         PatternUtils.checkSmsCode(userBasicDto.getSmsCode());
         // 校验用户名和电话号唯一性，验证码正确性
+        matchSmsCode(userBasicDto.getPhone(), userBasicDto.getSmsCode(), SMS_REGISTER_PREFIX);
         AssertUtils.isNull(repository.findByUsername(userBasicDto.getUsername()), USERNAME_EXISTS);
         AssertUtils.isNull(repository.findByPhone(userBasicDto.getPhone()), PHONE_EXISTS);
-        matchSmsCode(userBasicDto.getPhone(), userBasicDto.getSmsCode(), SMS_REGISTER_PREFIX);
         // 新增用户
         UserBasic user = new UserBasic();
         BeanUtils.copyProperties(userBasicDto, user);
         user.setPassword(SecureUtil.md5(userBasicDto.getPassword()));
         user = repository.save(user);
-        // 新增用户详细详细，默认昵称为用户名
+        // 新增用户详细信息，默认昵称为用户名
         UserDetail userDetail = new UserDetail();
         userDetail.setUserId(user.getId());
         userDetail.setNickname(userBasicDto.getUsername());
@@ -170,6 +170,7 @@ public class UserBasicService {
         PatternUtils.checkPhone(phone);
         PatternUtils.checkSmsCode(smsCode);
         matchSmsCode(phone, smsCode, SMS_BIND_PREFIX);
+        AssertUtils.isNull(repository.findByPhone(phone), PHONE_EXISTS);
         // 判断用户是否是可换绑状态
         UserBasic user = getUser();
         AssertUtils.isTrue(redisTemplate.delete(PHONE_BIND_PREFIX + user.getId()), PHONE_BIND_STATUS_WRONG);

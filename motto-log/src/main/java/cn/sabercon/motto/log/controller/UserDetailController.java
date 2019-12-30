@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author ywk
@@ -33,6 +34,12 @@ public class UserDetailController {
     public CommonResult update(UserDetailDto dto) {
         service.update(dto);
         return CommonResult.success();
+    }
+
+    @ApiOperation("上传用户头像")
+    @PostMapping("avatar")
+    public CommonResult uploadAvatar(MultipartFile avatar) {
+        return CommonResult.success(service.uploadAvatar(avatar));
     }
 
 }

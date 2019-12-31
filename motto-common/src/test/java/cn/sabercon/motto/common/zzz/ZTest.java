@@ -2,8 +2,7 @@ package cn.sabercon.motto.common.zzz;
 
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 /**
  * 通用测试类
@@ -15,8 +14,9 @@ class ZTest {
 
     @Test
     void common() {
-        LocalDateTime now = LocalDateTime.now();
-        String prefix = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
-        System.out.println(prefix);
+        Boy boy = new Boy();
+        boy.setTestEnum(TestEnum.A);
+        System.out.println(boy.getTestEnum().toString());
+        Arrays.stream(boy.getTestEnum().getClass().getDeclaredFields()).forEach(e -> System.out.println(e.getName()));
     }
 }

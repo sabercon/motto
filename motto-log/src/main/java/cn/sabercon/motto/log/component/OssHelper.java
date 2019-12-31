@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -34,13 +33,13 @@ public class OssHelper {
      * 上传文件
      *
      * @param file     要上传的文件
-     * @param dir   OSS的储存目录
+     * @param dir      OSS的储存目录
      * @param filename 文件名称，需包含后缀名
      * @return 访问文件的url
      */
     public String upload(MultipartFile file, String dir, String filename) {
         // 得到文件路径
-        if (! dir.endsWith("/")) {
+        if (!dir.endsWith("/")) {
             dir += "/";
         }
         String filePath = dir + filename;

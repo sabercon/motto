@@ -2,9 +2,6 @@ package cn.sabercon.motto.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
-import javax.annotation.Nonnull;
 
 /**
  * 自定义的错误码
@@ -17,16 +14,16 @@ import javax.annotation.Nonnull;
 public enum ErrorCode {
 
     // 通用操作码
-    FAIL(50000,"network error"),
-    UNAUTHORIZED(40001, "unauthorized user"),
+    FAIL(50000, "网络异常"),
+    UNAUTHORIZED(40001, "用户未登录或登录信息过期"),
     // 用户相关
-    SMS_SENDING_ERROR(40011, "error when sending sms code"),
-    SMS_CODE_WRONG(40012, "sms code is wrong"),
-    USERNAME_EXISTS(40013, "username is already used"),
-    PHONE_EXISTS(40014, "phone number is already bound"),
-    USER_NOT_EXISTS(40015, "user does not exist"),
-    PASSWORD_WRONG(40016, "password does not match"),
-    PHONE_BIND_STATUS_WRONG(40017, "user is not phone-changeable status"),
+    SMS_SENDING_ERROR(40011, "短信验证码发送失败"),
+    SMS_CODE_WRONG(40012, "短信验证码错误"),
+    USERNAME_EXISTS(40013, "用户名已存在"),
+    PHONE_EXISTS(40014, "手机号已被绑定"),
+    USER_NOT_EXISTS(40015, "用户不存在"),
+    PASSWORD_WRONG(40016, "密码错误"),
+    PHONE_BIND_WRONG(40017, "原手机号未解绑，请先解绑"),
     ;
     /**
      * 错误码

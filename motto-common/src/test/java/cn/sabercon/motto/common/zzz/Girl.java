@@ -1,6 +1,5 @@
 package cn.sabercon.motto.common.zzz;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

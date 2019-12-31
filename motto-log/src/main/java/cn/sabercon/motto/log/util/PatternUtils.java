@@ -1,7 +1,6 @@
 package cn.sabercon.motto.log.util;
 
 import cn.sabercon.motto.common.util.AssertUtils;
-import lombok.experimental.UtilityClass;
 
 /**
  * 用正则表达式校验参数的工具类

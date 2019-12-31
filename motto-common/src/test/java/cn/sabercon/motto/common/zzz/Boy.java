@@ -1,6 +1,5 @@
 package cn.sabercon.motto.common.zzz;
 
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,4 +14,5 @@ public class Boy {
     private String name;
     private Integer age;
     private Girl girlFriend;
+    private TestEnum testEnum;
 }

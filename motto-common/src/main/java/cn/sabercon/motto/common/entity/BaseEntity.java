@@ -3,9 +3,6 @@ package cn.sabercon.motto.common.entity;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -34,7 +31,6 @@ public abstract class BaseEntity implements Serializable {
     @CreationTimestamp
     @Column(updatable = false)
     private LocalDateTime createDate;
-
 
 
     /**

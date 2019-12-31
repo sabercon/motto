@@ -33,7 +33,7 @@ aliyun:
     maxSize: 100 # 上传文件大小(M)
     dir:
       avatar: user/avatar/
-      diaryImg: diary/img/
+      diary-img: diary/img/
       pic: resource/pic/
       file: resource/file/
   # 阿里短信配置信息

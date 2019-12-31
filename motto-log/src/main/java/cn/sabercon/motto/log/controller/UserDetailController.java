@@ -2,7 +2,6 @@ package cn.sabercon.motto.log.controller;
 
 import cn.sabercon.motto.common.response.CommonResult;
 import cn.sabercon.motto.log.dto.UserDetailDto;
-import cn.sabercon.motto.log.entity.UserDetail;
 import cn.sabercon.motto.log.service.UserDetailService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

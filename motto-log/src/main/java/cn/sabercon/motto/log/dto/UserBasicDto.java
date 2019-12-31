@@ -3,17 +3,13 @@ package cn.sabercon.motto.log.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
-
-import java.io.Serializable;
 
 /**
  * @author ywk
  * @date 2019-10-15
  */
 @Data
-@Accessors(chain = true)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserBasicDto {
 

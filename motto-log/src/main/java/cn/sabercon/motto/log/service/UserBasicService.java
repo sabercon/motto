@@ -173,7 +173,7 @@ public class UserBasicService {
         AssertUtils.isNull(repository.findByPhone(phone), PHONE_EXISTS);
         // 判断用户是否是可换绑状态
         UserBasic user = getUser();
-        AssertUtils.isTrue(redisTemplate.delete(PHONE_BIND_PREFIX + user.getId()), PHONE_BIND_STATUS_WRONG);
+        AssertUtils.isTrue(redisTemplate.delete(PHONE_BIND_PREFIX + user.getId()), PHONE_BIND_WRONG);
         // 绑定新手机
         user.setPhone(phone);
         repository.save(user);

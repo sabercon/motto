@@ -1,6 +1,5 @@
 package cn.sabercon.motto.log.component;
 
-import cn.hutool.core.map.MapUtil;
 import cn.sabercon.motto.common.util.AssertUtils;
 import cn.sabercon.motto.log.util.JwtTokenUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +13,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
-import java.util.Map;
 
 import static cn.sabercon.motto.common.enums.ErrorCode.UNAUTHORIZED;
 

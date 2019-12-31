@@ -11,8 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 
 /**
  * @author ywk
@@ -38,6 +36,10 @@ public class UserDetail extends BaseEntity {
 
     LocalDate birthday;
 
-    String address;
+    String country;
+
+    String province;
+
+    String city;
 
 }

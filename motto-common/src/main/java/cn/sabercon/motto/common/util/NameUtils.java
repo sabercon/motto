@@ -20,13 +20,13 @@ public class NameUtils {
 
     /**
      * 在文件名前面加上时间，防止重复
+     * 注：并发量较大时，需采用更严格的命名方法防止重复
      *
      * @param filename 初始文件名称
      * @return 加上时间的文件名称
      */
     public String getFilename(String filename) {
-        LocalDateTime now = LocalDateTime.now();
-        String prefix = now.format(formatter);
+        String prefix = formatter.format(LocalDateTime.now());
         return prefix + filename;
     }
 }

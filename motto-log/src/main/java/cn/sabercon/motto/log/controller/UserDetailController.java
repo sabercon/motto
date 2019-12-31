@@ -37,7 +37,7 @@ public class UserDetailController {
 
     @ApiOperation("上传用户头像")
     @PostMapping("avatar")
-    public CommonResult uploadAvatar(MultipartFile avatar) {
+    public CommonResult<String> uploadAvatar(MultipartFile avatar) {
         return CommonResult.success(service.uploadAvatar(avatar));
     }
 

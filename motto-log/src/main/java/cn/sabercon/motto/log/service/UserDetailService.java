@@ -38,7 +38,7 @@ public class UserDetailService {
 
     public void update(UserDetailDto dto) {
         UserDetail userDetail = repository.findByUserId(LoginUtils.getId());
-        EntityUtils.copyPropertiesIgnoreEmpty(dto, userDetail);
+        BeanUtils.copyProperties(dto, userDetail);
     }
 
     /**

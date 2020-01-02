@@ -10,7 +10,7 @@ spring:
     multipart:
       max-file-size: 100MB
   datasource:
-    url: jdbc:mysql://106.53.10.76:3306/motto?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://106.53.10.76:3306/motto?useUnicode=true&characterEncoding=utf-8
     username: sabercon
     password: 123456
   jpa:

@@ -17,9 +17,13 @@ import java.time.LocalDate;
  * @date 2020-01-02
  */
 @Entity
+@Table(indexes = @Index(columnList = "userId"))
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class File extends BaseEntity {
+
+    @Column(nullable = false, unique = true)
+    Long userId;
 
     String name;
 

@@ -25,6 +25,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
                 .addPathPatterns("/user/**")
                 .excludePathPatterns("/user/register", "/user/login", "/user/reset", "/user/sms/**")
                 .addPathPatterns("/userInfo/**")
+                .addPathPatterns("/file/**")
                 .order(0);
     }
 }

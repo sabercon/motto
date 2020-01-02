@@ -11,5 +11,5 @@ import org.springframework.data.domain.Pageable;
  */
 public interface FileRepository extends BaseJpaRepository<File> {
 
-    Page<File> findByDelAndNameLike(Integer del, String name, Pageable pageable);
+    Page<File> findByUserIdAndDelAndNameLike(Long userId, Integer del, String name, Pageable pageable);
 }

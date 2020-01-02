@@ -7,12 +7,11 @@ import cn.sabercon.motto.log.component.OssHelper;
 import cn.sabercon.motto.log.dao.FileRepository;
 import cn.sabercon.motto.log.dto.FileDto;
 import cn.sabercon.motto.log.entity.File;
+import cn.sabercon.motto.log.util.LoginUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,17 +40,21 @@ public class FileService {
         fileEntity.setType(file.getContentType());
         fileEntity.setSize(file.getSize());
         fileEntity.setDel(0);
+        fileEntity.setUserId(LoginUtils.getId());
         repository.save(fileEntity);
     }
 
     public void delete(Long id) {
         File file = repository.getOne(id);
-        file.setDel(1);
+        if (file.getUserId().equals(LoginUtils.getId())) {
+            file.setDel(1);
+        }
     }
 
     public CommonPage<FileDto> list(PageReq pageReq) {
         pageReq.amendAll();
-        Page<File> filePage = repository.findByDelAndNameLike(0, pageReq.getLike(), pageReq.getPageable());
+        Page<File> filePage = repository.findByUserIdAndDelAndNameLike(LoginUtils.getId(),
+                0, pageReq.getLike(), pageReq.getPageable());
         return CommonPage.of(filePage.map(this::toDto));
     }
 

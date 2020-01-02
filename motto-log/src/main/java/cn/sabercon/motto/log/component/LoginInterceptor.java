@@ -39,6 +39,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
         // 获取token
+        AssertUtils.isNotNull(request.getCookies(), UNAUTHORIZED);
         String token = Arrays.stream(request.getCookies())
                 .filter(cookie -> JwtTokenUtils.JWT_COOKIE_NAME.equalsIgnoreCase(cookie.getName()))
                 .findFirst().map(Cookie::getValue).orElse(null);

@@ -33,7 +33,7 @@ public class Swagger2Config {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("MottoLog Api接口")
+                .title("MottoLog API")
                 .description("motto-log")
                 .version("1.0")
                 .build();

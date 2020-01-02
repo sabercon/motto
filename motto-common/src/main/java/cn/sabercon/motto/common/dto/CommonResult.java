@@ -1,4 +1,4 @@
-package cn.sabercon.motto.common.response;
+package cn.sabercon.motto.common.dto;
 
 import cn.sabercon.motto.common.enums.ErrorCode;
 import lombok.AllArgsConstructor;

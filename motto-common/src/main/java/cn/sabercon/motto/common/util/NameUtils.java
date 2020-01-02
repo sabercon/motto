@@ -29,4 +29,17 @@ public class NameUtils {
         String prefix = formatter.format(LocalDateTime.now());
         return prefix + filename;
     }
+
+    /**
+     * 获取数据库模糊查询的名称
+     *
+     * @param name 初始名称，可为空
+     * @return 可用于模糊查询的名称
+     */
+    public String getLikeName(String name) {
+        if (name == null) {
+            name = "";
+        }
+        return "%" + name.trim() + "%";
+    }
 }

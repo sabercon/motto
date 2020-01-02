@@ -1,6 +1,6 @@
 package cn.sabercon.motto.log.controller;
 
-import cn.sabercon.motto.common.response.CommonResult;
+import cn.sabercon.motto.common.dto.CommonResult;
 import cn.sabercon.motto.common.util.CookieUtils;
 import cn.sabercon.motto.log.dto.UserBasicDto;
 import cn.sabercon.motto.log.service.UserBasicService;

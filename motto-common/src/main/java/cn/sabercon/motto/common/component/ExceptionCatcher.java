@@ -1,7 +1,7 @@
 package cn.sabercon.motto.common.component;
 
 import cn.sabercon.motto.common.exception.CommonException;
-import cn.sabercon.motto.common.response.CommonResult;
+import cn.sabercon.motto.common.dto.CommonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.ExceptionHandler;

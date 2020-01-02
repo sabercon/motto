@@ -14,31 +14,21 @@ import java.time.LocalDate;
 
 /**
  * @author ywk
- * @date 2019-10-15
+ * @date 2020-01-02
  */
 @Entity
-@Table(indexes = @Index(columnList = "userId"))
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDetail extends BaseEntity {
+public class File extends BaseEntity {
 
-    @Column(nullable = false, unique = true)
-    Long userId;
+    String name;
 
-    String nickname;
+    Long size;
 
-    String profile;
+    String type;
 
-    String avatar;
+    String url;
 
-    Integer gender;
-
-    LocalDate birthday;
-
-    String country;
-
-    String province;
-
-    String city;
+    Integer del;
 
 }

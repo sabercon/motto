@@ -1,4 +1,4 @@
-package cn.sabercon.motto.common.response;
+package cn.sabercon.motto.common.dto;
 
 import lombok.Data;
 import org.springframework.data.domain.Page;

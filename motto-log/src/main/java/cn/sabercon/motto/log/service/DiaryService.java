@@ -1,6 +1,6 @@
 package cn.sabercon.motto.log.service;
 
-import cn.sabercon.motto.common.dto.CommonPage;
+import cn.sabercon.motto.common.dto.PageRes;
 import cn.sabercon.motto.common.dto.PageReq;
 import cn.sabercon.motto.common.util.EntityUtils;
 import cn.sabercon.motto.log.component.OssHelper;
@@ -56,7 +56,7 @@ public class DiaryService {
         return toDto(diary);
     }
 
-    public CommonPage<DiaryDto> list(PageReq pageReq) {
+    public PageRes<DiaryDto> list(PageReq pageReq) {
         pageReq.amendAll();
         Page<Diary> diaryPage;
         if (StringUtils.hasLength(pageReq.getEqualValue())) {
@@ -66,7 +66,7 @@ public class DiaryService {
         } else {
             diaryPage = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.getPageable());
         }
-        return CommonPage.of(diaryPage.map(this::toDtoWithoutText));
+        return PageRes.of(diaryPage.map(this::toDtoWithoutText));
     }
 
     private DiaryDto toDto(Diary diary) {

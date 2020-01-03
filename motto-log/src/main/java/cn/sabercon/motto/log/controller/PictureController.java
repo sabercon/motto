@@ -1,11 +1,9 @@
 package cn.sabercon.motto.log.controller;
 
-import cn.sabercon.motto.common.dto.CommonPage;
-import cn.sabercon.motto.common.dto.CommonResult;
+import cn.sabercon.motto.common.dto.PageRes;
+import cn.sabercon.motto.common.dto.Result;
 import cn.sabercon.motto.common.dto.PageReq;
-import cn.sabercon.motto.log.dto.FileDto;
 import cn.sabercon.motto.log.dto.PictureDto;
-import cn.sabercon.motto.log.service.FileService;
 import cn.sabercon.motto.log.service.PictureService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,22 +26,22 @@ public class PictureController {
 
     @ApiOperation("上传图片")
     @PostMapping
-    public CommonResult save(MultipartFile pic, String name) {
+    public Result save(MultipartFile pic, String name) {
         service.save(pic, name);
-        return CommonResult.success();
+        return Result.success();
     }
 
     @ApiOperation("删除图片")
     @DeleteMapping
-    public CommonResult delete(Long id) {
+    public Result delete(Long id) {
         service.delete(id);
-        return CommonResult.success();
+        return Result.success();
     }
 
     @ApiOperation("获取图片列表")
     @GetMapping
-    public CommonResult<CommonPage<PictureDto>> list(PageReq pageReq) {
-        return CommonResult.success(service.list(pageReq));
+    public Result<PageRes<PictureDto>> list(PageReq pageReq) {
+        return Result.success(service.list(pageReq));
     }
 
 }

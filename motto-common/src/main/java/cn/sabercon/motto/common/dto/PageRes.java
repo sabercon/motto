@@ -6,13 +6,13 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 /**
- * 通用分页对象
+ * 分页结果的实体类
  *
  * @author ywk
  * @date 2019-10-15
  */
 @Data
-public class CommonPage<T> {
+public class PageRes<T> {
 
     /**
      * 当前页码
@@ -38,8 +38,8 @@ public class CommonPage<T> {
     /**
      * 将SpringDataJpa分页后的list转为分页信息
      */
-    public static <T> CommonPage<T> of(Page<T> pageInfo) {
-        CommonPage<T> result = new CommonPage<T>();
+    public static <T> PageRes<T> of(Page<T> pageInfo) {
+        PageRes<T> result = new PageRes<T>();
         result.setPageNum(pageInfo.getNumber());
         result.setPageSize(pageInfo.getSize());
         result.setTotalPage(pageInfo.getTotalPages());

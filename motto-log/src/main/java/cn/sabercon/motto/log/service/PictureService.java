@@ -1,6 +1,6 @@
 package cn.sabercon.motto.log.service;
 
-import cn.sabercon.motto.common.dto.CommonPage;
+import cn.sabercon.motto.common.dto.PageRes;
 import cn.sabercon.motto.common.dto.PageReq;
 import cn.sabercon.motto.common.enums.ErrorCode;
 import cn.sabercon.motto.common.util.AssertUtils;
@@ -74,10 +74,10 @@ public class PictureService {
         picture.setDel(1);
     }
 
-    public CommonPage<PictureDto> list(PageReq pageReq) {
+    public PageRes<PictureDto> list(PageReq pageReq) {
         pageReq.amendAll();
         Page<Picture> picPage = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.getPageable());
-        return CommonPage.of(picPage.map(this::toDto));
+        return PageRes.of(picPage.map(this::toDto));
     }
 
     private PictureDto toDto(Picture picture) {

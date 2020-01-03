@@ -1,17 +1,14 @@
 package cn.sabercon.motto.log.controller;
 
-import cn.sabercon.motto.common.dto.CommonPage;
-import cn.sabercon.motto.common.dto.CommonResult;
+import cn.sabercon.motto.common.dto.PageRes;
+import cn.sabercon.motto.common.dto.Result;
 import cn.sabercon.motto.common.dto.PageReq;
 import cn.sabercon.motto.log.dto.DiaryDto;
-import cn.sabercon.motto.log.dto.PictureDto;
 import cn.sabercon.motto.log.service.DiaryService;
-import cn.sabercon.motto.log.service.PictureService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author ywk
@@ -28,28 +25,28 @@ public class DiaryController {
 
     @ApiOperation("新增或修改日记")
     @PostMapping
-    public CommonResult save(DiaryDto diaryDto) {
+    public Result save(DiaryDto diaryDto) {
         service.save(diaryDto);
-        return CommonResult.success();
+        return Result.success();
     }
 
     @ApiOperation("删除日记")
     @DeleteMapping
-    public CommonResult delete(Long id) {
+    public Result delete(Long id) {
         service.delete(id);
-        return CommonResult.success();
+        return Result.success();
     }
 
     @ApiOperation("获取日记")
     @GetMapping
-    public CommonResult<DiaryDto> get(Long id) {
-        return CommonResult.success(service.get(id));
+    public Result<DiaryDto> get(Long id) {
+        return Result.success(service.get(id));
     }
 
     @ApiOperation("获取日记列表")
     @GetMapping("list")
-    public CommonResult<CommonPage<DiaryDto>> list(PageReq pageReq) {
-        return CommonResult.success(service.list(pageReq));
+    public Result<PageRes<DiaryDto>> list(PageReq pageReq) {
+        return Result.success(service.list(pageReq));
     }
 
 }

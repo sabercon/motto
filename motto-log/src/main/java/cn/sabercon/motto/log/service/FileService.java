@@ -1,6 +1,6 @@
 package cn.sabercon.motto.log.service;
 
-import cn.sabercon.motto.common.dto.CommonPage;
+import cn.sabercon.motto.common.dto.PageRes;
 import cn.sabercon.motto.common.dto.PageReq;
 import cn.sabercon.motto.common.util.NameUtils;
 import cn.sabercon.motto.log.component.OssHelper;
@@ -49,10 +49,10 @@ public class FileService {
         file.setDel(1);
     }
 
-    public CommonPage<FileDto> list(PageReq pageReq) {
+    public PageRes<FileDto> list(PageReq pageReq) {
         pageReq.amendAll();
         Page<File> filePage = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.getPageable());
-        return CommonPage.of(filePage.map(this::toDto));
+        return PageRes.of(filePage.map(this::toDto));
     }
 
     private FileDto toDto(File file) {

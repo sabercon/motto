@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommonResult<T> {
+public class Result<T> {
 
     /**
      * 是否成功
@@ -38,11 +38,11 @@ public class CommonResult<T> {
      *
      * @param data 获取的数据
      */
-    public static <T> CommonResult<T> success(T data) {
-        return new CommonResult<T>(true, null, null, data);
+    public static <T> Result<T> success(T data) {
+        return new Result<T>(true, null, null, data);
     }
 
-    public static CommonResult success() {
+    public static Result success() {
         return success(null);
     }
 
@@ -51,15 +51,15 @@ public class CommonResult<T> {
      *
      * @param errorCode 错误码
      */
-    public static <T> CommonResult<T> fail(ErrorCode errorCode) {
-        return new CommonResult<T>(false, errorCode.getCode(), errorCode.getMsg(), null);
+    public static <T> Result<T> fail(ErrorCode errorCode) {
+        return new Result<T>(false, errorCode.getCode(), errorCode.getMsg(), null);
     }
 
-    public static <T> CommonResult<T> fail(String msg) {
-        return new CommonResult<T>(false, null, msg, null);
+    public static <T> Result<T> fail(String msg) {
+        return new Result<T>(false, null, msg, null);
     }
 
-    public static <T> CommonResult<T> fail() {
+    public static <T> Result<T> fail() {
         return fail(ErrorCode.FAIL);
     }
 }

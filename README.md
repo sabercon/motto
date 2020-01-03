@@ -1,2 +1,2 @@
 # motto
-This is a personal project about recording daily life
+This is the back-end of motto-log project

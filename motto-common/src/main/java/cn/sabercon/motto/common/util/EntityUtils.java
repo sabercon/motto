@@ -1,5 +1,6 @@
 package cn.sabercon.motto.common.util;
 
+import cn.sabercon.motto.common.anno.NotCover;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -11,7 +12,9 @@ import org.springframework.util.StringUtils;
 
 import java.beans.FeatureDescriptor;
 import java.beans.PropertyDescriptor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
@@ -25,12 +28,31 @@ import java.util.stream.Stream;
 public class EntityUtils {
 
     /**
+     * 复制属性到目标实体，目标中带有 {@link NotCover} 的属性会被忽略
+     *
+     * @param source 复制来源
+     * @param target 复制目标
+     */
+    public void copyIgnoreNotCover(Object source, Object target) {
+        BeanUtils.copyProperties(source, target, getNotCoverPropertyNames(target));
+    }
+
+    /**
+     * 得到实体中带有 {@link NotCover} 的属性名称数组
+     */
+    private String[] getNotCoverPropertyNames(Object bean) {
+        return Stream.of(bean.getClass().getDeclaredFields())
+                .filter(field -> field.isAnnotationPresent(NotCover.class))
+                .map(Field::getName).toArray(String[]::new);
+    }
+
+    /**
      * 复制属性到目标实体，来源中为null或空字符串的属性会被忽略
      *
      * @param source 复制来源
      * @param target 复制目标
      */
-    public void copyPropertiesIgnoreEmpty(Object source, Object target) {
+    public void copyIgnoreEmpty(Object source, Object target) {
         BeanUtils.copyProperties(source, target, getEmptyPropertyNames(source));
     }
 
@@ -43,20 +65,6 @@ public class EntityUtils {
         return Stream.of(descriptors).map(FeatureDescriptor::getName)
                 .filter(name -> StringUtils.isEmpty(beanWrapper.getPropertyValue(name)))
                 .distinct().toArray(String[]::new);
-    }
-
-    /**
-     * 更新数据库实体，更新内容为空的字段自动忽略
-     *
-     * @param repository    实体的repository
-     * @param updateContent 包含更新内容的bean，必须有id
-     */
-    @Deprecated
-    public <E, D> void updateByDto(JpaRepository<E, Long> repository, D updateContent) {
-        Long id = (Long) invokeGetMethod(updateContent, "id");
-        Assert.notNull(id, "the update content must have id");
-        E entity = repository.getOne(id);
-        copyPropertiesIgnoreEmpty(updateContent, entity);
     }
 
     /**

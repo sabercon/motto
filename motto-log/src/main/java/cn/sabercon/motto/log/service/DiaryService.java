@@ -35,14 +35,14 @@ public class DiaryService {
         if (dto.getId() == null) {
             // create
             Diary diary = new Diary();
-            EntityUtils.copyPropertiesIgnoreEmpty(dto, diary);
+            EntityUtils.copyIgnoreEmpty(dto, diary);
             diary.setUserId(LoginUtils.getId());
             diary.setDel(0);
             repository.save(diary);
         } else {
             // update
             Diary diary = repository.getOne(dto.getId());
-            EntityUtils.copyPropertiesIgnoreEmpty(dto, diary);
+            EntityUtils.copyIgnoreEmpty(dto, diary);
         }
     }
 

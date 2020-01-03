@@ -1,5 +1,9 @@
 package cn.sabercon.motto.common.entity;
 
+import cn.sabercon.motto.common.anno.NotCover;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -23,6 +27,7 @@ public abstract class BaseEntity implements Serializable {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotCover
     private Long id;
 
     /**
@@ -30,6 +35,7 @@ public abstract class BaseEntity implements Serializable {
      */
     @CreationTimestamp
     @Column(updatable = false)
+    @NotCover
     private LocalDateTime createDate;
 
 
@@ -37,5 +43,6 @@ public abstract class BaseEntity implements Serializable {
      * 更新时间
      */
     @UpdateTimestamp
+    @NotCover
     private LocalDateTime updateDate;
 }

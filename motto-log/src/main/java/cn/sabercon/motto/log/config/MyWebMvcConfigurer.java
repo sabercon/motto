@@ -22,10 +22,8 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor)
-                .addPathPatterns("/user/**")
+                .addPathPatterns("/**")
                 .excludePathPatterns("/user/register", "/user/login", "/user/reset", "/user/sms/**")
-                .addPathPatterns("/userInfo/**")
-                .addPathPatterns("/file/**")
                 .order(0);
     }
 }

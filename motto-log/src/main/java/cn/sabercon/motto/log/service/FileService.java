@@ -51,7 +51,7 @@ public class FileService {
 
     public CommonPage<FileDto> list(PageReq pageReq) {
         pageReq.amendAll();
-        Page<File> filePage = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getLike(), pageReq.getPageable());
+        Page<File> filePage = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.getPageable());
         return CommonPage.of(filePage.map(this::toDto));
     }
 

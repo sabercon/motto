@@ -11,7 +11,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * 分页请求的实体类
- * 注：排序和模糊查询暂时只支持一项
+ * 注：排序和查询暂时只支持一项
  *
  * @author ywk
  * @date 2020-01-02
@@ -25,9 +25,14 @@ public class PageReq {
     Integer pageSize;
 
     /**
+     * 精确查询的值
+     */
+    String equalValue;
+
+    /**
      * 模糊查询的值
      */
-    String like;
+    String fuzzyValue;
 
     /**
      * 要排序的属性
@@ -45,10 +50,10 @@ public class PageReq {
     Pageable pageable;
 
     /**
-     * 将like转为可直接模糊查询的值
+     * 将 fuzzyField 转为可直接模糊查询的值
      */
-    public void amendLike() {
-        like = NameUtils.getLikeName(like);
+    public void amendFuzzy() {
+        fuzzyValue = NameUtils.getLikeName(fuzzyValue);
     }
 
     /**
@@ -96,7 +101,7 @@ public class PageReq {
      * 调用所有 amend 方法 和 create 方法
      */
     public void amendAll() {
-        amendLike();
+        amendFuzzy();
         amendSort();
         amendDirection();
         amendPageNum();

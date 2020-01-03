@@ -76,7 +76,7 @@ public class PictureService {
 
     public CommonPage<PictureDto> list(PageReq pageReq) {
         pageReq.amendAll();
-        Page<Picture> picPage = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getLike(), pageReq.getPageable());
+        Page<Picture> picPage = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.getPageable());
         return CommonPage.of(picPage.map(this::toDto));
     }
 

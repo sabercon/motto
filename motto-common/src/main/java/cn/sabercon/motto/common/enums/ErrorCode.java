@@ -24,6 +24,8 @@ public enum ErrorCode {
     USER_NOT_EXISTS(40015, "用户不存在"),
     PASSWORD_WRONG(40016, "密码错误"),
     PHONE_BIND_WRONG(40017, "原手机号未解绑，请先解绑"),
+    // 资源相关
+    PIC_TYPE_WRONG(40021,"图片类型错误")
     ;
     /**
      * 错误码

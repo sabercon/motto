@@ -1,5 +1,6 @@
 package cn.sabercon.motto.common.zzz;
 
+import com.oracle.webservices.internal.api.message.ContentType;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -14,9 +15,5 @@ class ZTest {
 
     @Test
     void common() {
-        Boy boy = new Boy();
-        boy.setTestEnum(TestEnum.A);
-        System.out.println(boy.getTestEnum().toString());
-        Arrays.stream(boy.getTestEnum().getClass().getDeclaredFields()).forEach(e -> System.out.println(e.getName()));
     }
 }

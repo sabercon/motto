@@ -20,20 +20,17 @@ import javax.persistence.Table;
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Where(clause = " del = 0 ")
-public class Picture extends BaseEntity {
+public class Diary extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     Long userId;
 
     String name;
 
-    Long size;
-
     String type;
 
-    String url;
-
-    String thumbnailUrl;
+    @Column(columnDefinition = "text")
+    String text;
 
     Integer del;
 

@@ -11,7 +11,6 @@ import cn.sabercon.motto.log.dto.PictureDto;
 import cn.sabercon.motto.log.entity.Picture;
 import cn.sabercon.motto.log.util.LoginUtils;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 import org.apache.http.entity.ContentType;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -63,8 +61,7 @@ public class PictureService {
         Picture picture = new Picture();
         picture.setName(name);
         picture.setUrl(url);
-        //todo thumbnail
-        picture.setThumbnailUrl(url);
+        picture.setThumbnailUrl(ossHelper.getThumbnail(url, 150));
         picture.setType(pic.getContentType());
         picture.setSize(pic.getSize());
         picture.setDel(0);
@@ -74,16 +71,13 @@ public class PictureService {
 
     public void delete(Long id) {
         Picture picture = repository.getOne(id);
-        if (picture.getUserId().equals(LoginUtils.getId())) {
-            picture.setDel(1);
-        }
+        picture.setDel(1);
     }
 
     public CommonPage<PictureDto> list(PageReq pageReq) {
         pageReq.amendAll();
-        Page<Picture> picturePage = repository.findByUserIdAndDelAndNameLike(LoginUtils.getId(),
-                0, pageReq.getLike(), pageReq.getPageable());
-        return CommonPage.of(picturePage.map(this::toDto));
+        Page<Picture> picPage = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getLike(), pageReq.getPageable());
+        return CommonPage.of(picPage.map(this::toDto));
     }
 
     private PictureDto toDto(Picture picture) {

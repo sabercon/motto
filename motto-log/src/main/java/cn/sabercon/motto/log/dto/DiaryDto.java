@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 
 /**
@@ -14,21 +15,17 @@ import java.time.LocalDateTime;
  */
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PictureDto {
+public class DiaryDto {
 
     Long id;
 
     String name;
 
-    @ApiModelProperty("文件大小，单位为byte")
-    Long size;
-
+    @ApiModelProperty("日记类型")
     String type;
 
-    String url;
-
-    @ApiModelProperty("缩略图url")
-    String thumbnailUrl;
+    @ApiModelProperty("日记内容")
+    String text;
 
     @ApiModelProperty(value = "删除标记：0-未删除，1-已删除", allowableValues = "0, 1", example = "0")
     Integer del;
@@ -36,5 +33,9 @@ public class PictureDto {
     @ApiModelProperty("创建日期")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime createTime;
+
+    @ApiModelProperty("更新日期")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    LocalDateTime updateTime;
 
 }

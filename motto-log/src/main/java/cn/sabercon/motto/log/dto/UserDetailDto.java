@@ -28,7 +28,7 @@ public class UserDetailDto {
     @ApiModelProperty(value = "性别：1-男，2-女", allowableValues = "1, 2", example = "1")
     Integer gender;
 
-    @ApiModelProperty(value = "出生日期")
+    @ApiModelProperty("出生日期")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     LocalDate birthday;
 

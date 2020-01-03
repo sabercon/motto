@@ -12,5 +12,5 @@ import org.springframework.data.domain.Pageable;
  */
 public interface PictureRepository extends BaseJpaRepository<Picture> {
 
-    Page<Picture> findByUserIdAndDelAndNameLike(Long userId, Integer del, String name, Pageable pageable);
+    Page<Picture> findByUserIdAndNameLike(Long userId, String name, Pageable pageable);
 }

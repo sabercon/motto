@@ -16,6 +16,7 @@ public enum ErrorCode {
     // 通用操作码
     FAIL(50000, "网络异常"),
     UNAUTHORIZED(40001, "用户未登录或登录信息过期"),
+    UPLOAD_FAIL(40002, "网络异常，上传文件失败"),
     // 用户相关
     SMS_SENDING_ERROR(40011, "短信验证码发送失败"),
     SMS_CODE_WRONG(40012, "短信验证码错误"),

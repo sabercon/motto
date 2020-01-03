@@ -46,15 +46,12 @@ public class FileService {
 
     public void delete(Long id) {
         File file = repository.getOne(id);
-        if (file.getUserId().equals(LoginUtils.getId())) {
-            file.setDel(1);
-        }
+        file.setDel(1);
     }
 
     public CommonPage<FileDto> list(PageReq pageReq) {
         pageReq.amendAll();
-        Page<File> filePage = repository.findByUserIdAndDelAndNameLike(LoginUtils.getId(),
-                0, pageReq.getLike(), pageReq.getPageable());
+        Page<File> filePage = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getLike(), pageReq.getPageable());
         return CommonPage.of(filePage.map(this::toDto));
     }
 

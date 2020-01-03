@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,6 +21,7 @@ import java.time.LocalDate;
 @Table(indexes = @Index(columnList = "userId"))
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Where(clause = " del = 0 ")
 public class File extends BaseEntity {
 
     @Column(nullable = false, unique = true)

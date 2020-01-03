@@ -21,7 +21,7 @@ public class FileDto {
 
     String name;
 
-    @ApiModelProperty(value = "文件大小，单位为byte")
+    @ApiModelProperty("文件大小，单位为byte")
     Long size;
 
     String type;
@@ -31,7 +31,7 @@ public class FileDto {
     @ApiModelProperty(value = "删除标记：0-未删除，1-已删除", allowableValues = "0, 1", example = "0")
     Integer del;
 
-    @ApiModelProperty(value = "创建日期")
+    @ApiModelProperty("创建日期")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     LocalDateTime createTime;
 

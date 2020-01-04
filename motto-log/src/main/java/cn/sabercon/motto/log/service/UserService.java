@@ -192,7 +192,7 @@ public class UserService {
     /**
      * 刷新redis里的用户信息
      *
-     * @param dto
+     * @param dto 新用户信息
      */
     private void refreshUserInRedis(UserDto dto) {
         String userStr = JSON.toJSONString(dto);

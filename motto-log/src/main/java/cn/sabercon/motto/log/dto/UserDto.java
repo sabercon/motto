@@ -15,7 +15,7 @@ import java.time.LocalDate;
  */
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserRes {
+public class UserDto {
 
     @ApiModelProperty("用户名")
     String username;

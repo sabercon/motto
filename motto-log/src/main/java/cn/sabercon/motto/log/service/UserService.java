@@ -2,16 +2,16 @@ package cn.sabercon.motto.log.service;
 
 import cn.hutool.crypto.SecureUtil;
 import cn.sabercon.motto.common.util.AssertUtils;
-import cn.sabercon.motto.log.component.SmsHelper;
+import cn.sabercon.motto.common.util.EntityUtils;
 import cn.sabercon.motto.log.dao.UserBasicRepository;
 import cn.sabercon.motto.log.dao.UserDetailRepository;
 import cn.sabercon.motto.log.dto.UserReq;
+import cn.sabercon.motto.log.dto.UserDto;
 import cn.sabercon.motto.log.entity.UserBasic;
 import cn.sabercon.motto.log.entity.UserDetail;
 import cn.sabercon.motto.log.util.LoginUtils;
 import cn.sabercon.motto.log.util.PatternUtils;
 import com.alibaba.fastjson.JSON;
-import com.google.common.collect.ImmutableMap;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,16 +32,14 @@ import static cn.sabercon.motto.log.util.JwtTokenUtils.*;
  */
 @Service
 @Transactional
-public class UserBasicService {
+public class UserService {
 
     @Autowired
     private UserBasicRepository repository;
     @Autowired
-    private UserDetailRepository userDetailRepository;
+    private UserDetailRepository detailRepository;
     @Autowired
     private StringRedisTemplate redisTemplate;
-    @Autowired
-    private SmsHelper smsHelper;
     @Value("${motto.user.defaultAvatar}")
     private String defaultAvatar;
 
@@ -50,29 +48,17 @@ public class UserBasicService {
      */
     private static final String PHONE_BIND_PREFIX = "phone:bind:";
 
-    /**
-     * 短信验证码保存前缀的映射
-     */
-    private static ImmutableMap<Integer, String> SMS_PREFIX_MAP;
-
-    static {
-        // 初始化构建映射
-        ImmutableMap.Builder<Integer, String> builder = ImmutableMap.builder();
-        SMS_PREFIX_MAP = builder
-                .put(1, SMS_REGISTER_PREFIX)
-                .put(2, SMS_LOGIN_PREFIX)
-                .put(3, SMS_RESET_PREFIX)
-                .put(4, SMS_UPDATE_PREFIX)
-                .put(5, SMS_UNBIND_PREFIX)
-                .put(6, SMS_BIND_PREFIX)
-                .build();
+    public UserDto get() {
+        return getUser();
     }
 
-    public UserReq get() {
-        UserReq userReq = new UserReq();
-        BeanUtils.copyProperties(getUser(), userReq);
-        userReq.setPassword(null);
-        return userReq;
+    public void update(UserDto dto) {
+        UserDetail userDetail = detailRepository.findByUserId(LoginUtils.getId());
+        EntityUtils.copyIgnoreNotCover(dto, userDetail);
+        // 更新缓存
+        UserDto user = getUser();
+        EntityUtils.copyIgnoreNotCover(dto, user);
+        refreshUserInRedis(user);
     }
 
     public void register(UserReq userReq) {
@@ -95,7 +81,7 @@ public class UserBasicService {
         userDetail.setUserId(user.getId());
         userDetail.setNickname(userReq.getUsername());
         userDetail.setAvatar(defaultAvatar);
-        userDetailRepository.save(userDetail);
+        detailRepository.save(userDetail);
     }
 
     public String login(UserReq userReq) {
@@ -115,7 +101,14 @@ public class UserBasicService {
             AssertUtils.isNotNull(user, USER_NOT_EXISTS);
             AssertUtils.isTrue(user.getPassword().equals(SecureUtil.md5(userReq.getPassword())), PASSWORD_WRONG);
         }
-        refreshUserInRedis(user);
+        // 缓存用户信息到redis
+        UserDetail detail = detailRepository.findByUserId(user.getId());
+        UserDto userDto = new UserDto();
+        BeanUtils.copyProperties(user, userDto);
+        BeanUtils.copyProperties(detail, userDto);
+        String userStr = JSON.toJSONString(userDto);
+        redisTemplate.opsForValue().set(JWT_USER_PREFIX + user.getId(), userStr, JWT_USER_EXPIRATION, TimeUnit.SECONDS);
+
         return generateTokenById(user.getId());
     }
 
@@ -124,45 +117,36 @@ public class UserBasicService {
         PatternUtils.checkPassword(userReq.getPassword());
         PatternUtils.checkPhone(userReq.getPhone());
         PatternUtils.checkSmsCode(userReq.getSmsCode());
-        UserBasic user = repository.findByPhone(userReq.getPhone());
-        AssertUtils.isNotNull(user, USER_NOT_EXISTS);
         matchSmsCode(userReq.getPhone(), userReq.getSmsCode(), SMS_RESET_PREFIX);
+        UserBasic userBasic = repository.findByPhone(userReq.getPhone());
+        AssertUtils.isNotNull(userBasic, USER_NOT_EXISTS);
         // 更新密码
-        user.setPassword(SecureUtil.md5(userReq.getPassword()));
-        repository.save(user);
+        userBasic.setPassword(SecureUtil.md5(userReq.getPassword()));
     }
 
     public void logout() {
         redisTemplate.delete(JWT_USER_PREFIX + LoginUtils.getId());
     }
 
-    public void sendSmsCode(Integer status, String phone) {
-        PatternUtils.checkPhone(phone);
-        // 根据status得到验证码保存到redis时的前缀
-        String prefix = SMS_PREFIX_MAP.get(status);
-        AssertUtils.isNotEmpty(prefix);
-        smsHelper.sendCode(phone, prefix);
-    }
-
     public void updatePassword(String password, String smsCode) {
         // 校验参数
         PatternUtils.checkPassword(password);
         PatternUtils.checkSmsCode(smsCode);
-        UserBasic user = getUser();
+        UserDto user = getUser();
         matchSmsCode(user.getPhone(), smsCode, SMS_UPDATE_PREFIX);
         // 更新密码
-        user.setPassword(SecureUtil.md5(password));
-        repository.save(user);
+        UserBasic userBasic = repository.findByPhone(user.getPhone());
+        userBasic.setPassword(SecureUtil.md5(password));
         // controller中退出登录
     }
 
     public void unbindPhone(String smsCode) {
         // 校验参数
         PatternUtils.checkSmsCode(smsCode);
-        UserBasic user = getUser();
+        UserDto user = getUser();
         matchSmsCode(user.getPhone(), smsCode, SMS_UNBIND_PREFIX);
         // 在redis中存入一个信息表示账号为可换手机状态，时间为5分钟
-        redisTemplate.opsForValue().set(PHONE_BIND_PREFIX + user.getId(), "", 5, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(PHONE_BIND_PREFIX + LoginUtils.getId(), "", 5, TimeUnit.MINUTES);
     }
 
     public void bindPhone(String phone, String smsCode) {
@@ -172,11 +156,13 @@ public class UserBasicService {
         matchSmsCode(phone, smsCode, SMS_BIND_PREFIX);
         AssertUtils.isNull(repository.findByPhone(phone), PHONE_EXISTS);
         // 判断用户是否是可换绑状态
-        UserBasic user = getUser();
-        AssertUtils.isTrue(redisTemplate.delete(PHONE_BIND_PREFIX + user.getId()), PHONE_BIND_WRONG);
+        AssertUtils.isTrue(redisTemplate.delete(PHONE_BIND_PREFIX + LoginUtils.getId()), PHONE_BIND_WRONG);
         // 绑定新手机
+        UserDto user = getUser();
+        UserBasic userBasic = repository.findByPhone(user.getPhone());
+        userBasic.setPhone(phone);
+        // 更新缓存
         user.setPhone(phone);
-        repository.save(user);
         refreshUserInRedis(user);
     }
 
@@ -198,19 +184,19 @@ public class UserBasicService {
      *
      * @return redis中缓存的用户信息
      */
-    private UserBasic getUser() {
+    private UserDto getUser() {
         String userStr = redisTemplate.opsForValue().get(JWT_USER_PREFIX + LoginUtils.getId());
-        return JSON.parseObject(userStr, UserBasic.class);
+        return JSON.parseObject(userStr, UserDto.class);
     }
 
     /**
-     * 刷新或保存用户信息到redis
+     * 刷新redis里的用户信息
      *
-     * @param user
+     * @param dto
      */
-    private void refreshUserInRedis(UserBasic user) {
-        String userStr = JSON.toJSONString(user);
-        redisTemplate.opsForValue().set(JWT_USER_PREFIX + user.getId(), userStr, JWT_USER_EXPIRATION, TimeUnit.SECONDS);
+    private void refreshUserInRedis(UserDto dto) {
+        String userStr = JSON.toJSONString(dto);
+        redisTemplate.opsForValue().set(JWT_USER_PREFIX + LoginUtils.getId(), userStr, JWT_USER_EXPIRATION, TimeUnit.SECONDS);
     }
 
 }

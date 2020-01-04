@@ -47,6 +47,7 @@ public class DiaryService {
         return repository.getOne(id);
     }
 
+    @Transactional(readOnly = true)
     public PageRes<Diary> list(PageReq pageReq) {
         pageReq.amendAll();
         Page<Diary> diaryPage;
@@ -57,7 +58,7 @@ public class DiaryService {
         } else {
             diaryPage = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.toPageable());
         }
-        // do not return text when getting page
+        // no need to return text when getting page
         diaryPage.forEach(diary -> diary.setText(null));
         return PageRes.of(diaryPage);
     }

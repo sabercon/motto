@@ -3,7 +3,8 @@ package cn.sabercon.motto.log.controller;
 import cn.sabercon.motto.common.dto.Result;
 import cn.sabercon.motto.common.util.CookieUtils;
 import cn.sabercon.motto.log.dto.UserReq;
-import cn.sabercon.motto.log.service.UserBasicService;
+import cn.sabercon.motto.log.dto.UserDto;
+import cn.sabercon.motto.log.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -18,19 +19,26 @@ import static cn.sabercon.motto.log.util.JwtTokenUtils.JWT_USER_EXPIRATION;
  * @author ywk
  * @date 2019-10-15
  */
-@Api("前台用户基础信息接口")
 @CrossOrigin
+@Api("用户接口")
 @RestController
 @RequestMapping("user")
-public class UserBasicController {
+public class UserController {
 
     @Autowired
-    private UserBasicService service;
+    private UserService service;
 
-    @ApiOperation("得到登录用户的基础信息")
+    @ApiOperation("得到登录用户的信息")
     @GetMapping
-    public Result<UserReq> get() {
+    public Result<UserDto> get() {
         return Result.success(service.get());
+    }
+
+    @ApiOperation("更新登录用户的详细信息")
+    @PutMapping
+    public Result update(UserDto dto) {
+        service.update(dto);
+        return Result.success();
     }
 
     @ApiOperation("用户注册")
@@ -62,15 +70,6 @@ public class UserBasicController {
     public Result logout() {
         service.logout();
         CookieUtils.addCookie(JWT_COOKIE_NAME, null, 0);
-        return Result.success();
-    }
-
-    @ApiOperation("发送短信验证码")
-    @ApiImplicitParam(name = "status", allowableValues = "range[1,6]",
-            value = "验证码的发送类型：1-注册，2-登录，3-重置密码，4-修改密码，5-解绑手机，6-绑定手机")
-    @GetMapping("sms/{status}/{phone}")
-    public Result sendSmsCode(@PathVariable Integer status, @PathVariable String phone) {
-        service.sendSmsCode(status, phone);
         return Result.success();
     }
 

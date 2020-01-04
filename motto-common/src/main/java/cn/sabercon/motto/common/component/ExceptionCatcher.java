@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @author ywk
  * @date 2019-10-15
  */
-@RestControllerAdvice
 @Slf4j
+@RestControllerAdvice
 public class ExceptionCatcher {
 
     /**
-     * 捕获自定义的{@link CommonException}
+     * 捕获自定义的 {@link CommonException}
      */
     @ExceptionHandler(CommonException.class)
     public Result commonExceptionHandler(CommonException e) {
@@ -27,7 +27,7 @@ public class ExceptionCatcher {
     }
 
     /**
-     * 主要捕获{@link Assert}抛出的{@link IllegalArgumentException}
+     * 主要捕获 {@link Assert} 抛出的 {@link IllegalArgumentException}
      */
     @ExceptionHandler(IllegalArgumentException.class)
     public Result illegalArgumentExceptionHandler(IllegalArgumentException e) {
@@ -36,7 +36,7 @@ public class ExceptionCatcher {
     }
 
     /**
-     * 主要捕获{@link Assert}抛出的{@link IllegalStateException}
+     * 主要捕获 {@link Assert} 抛出的 {@link IllegalStateException}
      */
     @ExceptionHandler(IllegalStateException.class)
     public Result illegalStateExceptionHandler(IllegalStateException e) {

@@ -23,7 +23,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/user/register", "/user/login", "/user/reset", "/user/sms/**")
+                .excludePathPatterns("/user/register", "/user/login", "/user/reset", "/sms/**")
                 .order(0);
     }
 }

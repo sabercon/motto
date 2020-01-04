@@ -3,8 +3,8 @@ package cn.sabercon.motto.log.controller;
 import cn.sabercon.motto.common.dto.PageRes;
 import cn.sabercon.motto.common.dto.Result;
 import cn.sabercon.motto.common.dto.PageReq;
-import cn.sabercon.motto.log.dto.PictureDto;
-import cn.sabercon.motto.log.service.PictureService;
+import cn.sabercon.motto.log.entity.Image;
+import cn.sabercon.motto.log.service.ImageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +18,16 @@ import org.springframework.web.multipart.MultipartFile;
 @Api("上传和获取图片接口")
 @CrossOrigin
 @RestController
-@RequestMapping("pic")
-public class PictureController {
+@RequestMapping("img")
+public class ImageController {
 
     @Autowired
-    private PictureService service;
+    private ImageService service;
 
     @ApiOperation("上传图片")
     @PostMapping
-    public Result save(MultipartFile pic, String name) {
-        service.save(pic, name);
+    public Result save(Image image) {
+        service.save(image);
         return Result.success();
     }
 
@@ -40,7 +40,7 @@ public class PictureController {
 
     @ApiOperation("获取图片列表")
     @GetMapping
-    public Result<PageRes<PictureDto>> list(PageReq pageReq) {
+    public Result<PageRes<Image>> list(PageReq pageReq) {
         return Result.success(service.list(pageReq));
     }
 

@@ -18,31 +18,31 @@ import java.time.LocalDateTime;
  * @author ywk
  * @date 2019-10-15
  */
-@MappedSuperclass
 @Data
+@MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
     /**
-     * 主键id
+     * 主键 id
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotCover
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /**
      * 创建时间
      */
+    @NotCover
     @CreationTimestamp
     @Column(updatable = false)
-    @NotCover
     private LocalDateTime createDate;
 
 
     /**
      * 更新时间
      */
-    @UpdateTimestamp
     @NotCover
+    @UpdateTimestamp
     private LocalDateTime updateDate;
 }

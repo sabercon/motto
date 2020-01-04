@@ -2,7 +2,7 @@ package cn.sabercon.motto.log.controller;
 
 import cn.sabercon.motto.common.dto.Result;
 import cn.sabercon.motto.common.util.CookieUtils;
-import cn.sabercon.motto.log.dto.UserBasicDto;
+import cn.sabercon.motto.log.dto.UserReq;
 import cn.sabercon.motto.log.service.UserBasicService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -29,22 +29,22 @@ public class UserBasicController {
 
     @ApiOperation("得到登录用户的基础信息")
     @GetMapping
-    public Result<UserBasicDto> get() {
+    public Result<UserReq> get() {
         return Result.success(service.get());
     }
 
     @ApiOperation("用户注册")
     @PostMapping("register")
-    public Result register(UserBasicDto userBasicDto) {
-        service.register(userBasicDto);
+    public Result register(UserReq userReq) {
+        service.register(userReq);
         return Result.success();
     }
 
     @ApiOperation("用户登录")
     @ApiImplicitParam(name = "remember", value = "是否保存登录信息", defaultValue = "false")
     @PostMapping("login")
-    public Result login(UserBasicDto userBasicDto, @RequestParam(defaultValue = "false") boolean remember) {
-        String token = service.login(userBasicDto);
+    public Result login(UserReq userReq, @RequestParam(defaultValue = "false") boolean remember) {
+        String token = service.login(userReq);
         int expiry = remember ? JWT_USER_EXPIRATION.intValue() : -1;
         CookieUtils.addCookie(JWT_COOKIE_NAME, token, expiry);
         return Result.success();
@@ -52,8 +52,8 @@ public class UserBasicController {
 
     @ApiOperation("找回密码")
     @PostMapping("reset")
-    public Result reset(UserBasicDto userBasicDto) {
-        service.reset(userBasicDto);
+    public Result reset(UserReq userReq) {
+        service.reset(userReq);
         return Result.success();
     }
 

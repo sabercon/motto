@@ -23,8 +23,8 @@ import java.util.stream.Stream;
  * @author ywk
  * @date 2019-11-05
  */
-@UtilityClass
 @Slf4j
+@UtilityClass
 public class EntityUtils {
 
     /**
@@ -47,7 +47,7 @@ public class EntityUtils {
     }
 
     /**
-     * 复制属性到目标实体，来源中为null或空字符串的属性会被忽略
+     * 复制属性到目标实体，来源中为 null 或空字符串的属性会被忽略
      *
      * @param source 复制来源
      * @param target 复制目标
@@ -57,7 +57,7 @@ public class EntityUtils {
     }
 
     /**
-     * 得到实体中为null或空字符串的属性名称数组
+     * 得到实体中为 null 或空字符串的属性名称数组
      */
     private String[] getEmptyPropertyNames(Object bean) {
         BeanWrapper beanWrapper = new BeanWrapperImpl(bean);
@@ -68,10 +68,10 @@ public class EntityUtils {
     }
 
     /**
-     * 根据属性名对bean执行get方法
-     * 获取错误时返回null
+     * 根据属性名对 bean 执行 get 方法
+     * 获取错误时返回 null
      *
-     * @param bean      bean对象
+     * @param bean      bean 对象
      * @param fieldName 属性名
      * @return 属性名对应get方法的返回值
      */
@@ -86,9 +86,9 @@ public class EntityUtils {
     }
 
     /**
-     * 根据属性名对bean执行set方法
+     * 根据属性名对 bean 执行 set 方法
      *
-     * @param bean      bean对象
+     * @param bean      bean 对象
      * @param fieldName 属性名
      * @param value     要设置的值
      */

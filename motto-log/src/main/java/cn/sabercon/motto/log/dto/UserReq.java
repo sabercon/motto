@@ -11,7 +11,7 @@ import lombok.experimental.FieldDefaults;
  */
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserBasicDto {
+public class UserReq {
 
     @ApiModelProperty("用户名")
     String username;

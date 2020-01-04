@@ -16,10 +16,10 @@ import java.time.LocalDate;
  * @author ywk
  * @date 2019-10-15
  */
-@Entity
-@Table(indexes = @Index(columnList = "userId"))
 @Data
+@Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(indexes = @Index(columnList = "userId"))
 public class UserDetail extends BaseEntity {
 
     @Column(nullable = false, unique = true)

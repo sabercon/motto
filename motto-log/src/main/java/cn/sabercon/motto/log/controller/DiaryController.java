@@ -3,7 +3,7 @@ package cn.sabercon.motto.log.controller;
 import cn.sabercon.motto.common.dto.PageRes;
 import cn.sabercon.motto.common.dto.Result;
 import cn.sabercon.motto.common.dto.PageReq;
-import cn.sabercon.motto.log.dto.DiaryDto;
+import cn.sabercon.motto.log.entity.Diary;
 import cn.sabercon.motto.log.service.DiaryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,8 +25,8 @@ public class DiaryController {
 
     @ApiOperation("新增或修改日记")
     @PostMapping
-    public Result save(DiaryDto diaryDto) {
-        service.save(diaryDto);
+    public Result save(Diary diary) {
+        service.save(diary);
         return Result.success();
     }
 
@@ -39,13 +39,13 @@ public class DiaryController {
 
     @ApiOperation("获取日记")
     @GetMapping
-    public Result<DiaryDto> get(Long id) {
+    public Result<Diary> get(Long id) {
         return Result.success(service.get(id));
     }
 
     @ApiOperation("获取日记列表")
     @GetMapping("list")
-    public Result<PageRes<DiaryDto>> list(PageReq pageReq) {
+    public Result<PageRes<Diary>> list(PageReq pageReq) {
         return Result.success(service.list(pageReq));
     }
 

@@ -9,8 +9,8 @@ import java.lang.annotation.*;
  * @author ywk
  * @date 2020-01-03
  */
-@Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.FIELD)
 @Documented
+@Target(ElementType.FIELD)
+@Retention(RetentionPolicy.RUNTIME)
 public @interface NotCover {
 }

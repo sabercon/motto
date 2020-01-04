@@ -1,5 +1,6 @@
 package cn.sabercon.motto.log.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -14,7 +15,13 @@ import java.time.LocalDate;
  */
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserDetailDto {
+public class UserRes {
+
+    @ApiModelProperty("用户名")
+    String username;
+
+    @ApiModelProperty("手机号")
+    String phone;
 
     @ApiModelProperty("昵称")
     String nickname;
@@ -29,7 +36,7 @@ public class UserDetailDto {
     Integer gender;
 
     @ApiModelProperty("出生日期")
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate birthday;
 
     String country;

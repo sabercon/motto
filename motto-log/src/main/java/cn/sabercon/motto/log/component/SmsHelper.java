@@ -24,8 +24,8 @@ import java.util.concurrent.TimeUnit;
  * @author ywk
  * @date 2019-10-15
  */
-@Component
 @Slf4j
+@Component
 public class SmsHelper {
     @Value("${aliyun.sms.accessKeyId}")
     private String accessKeyId;

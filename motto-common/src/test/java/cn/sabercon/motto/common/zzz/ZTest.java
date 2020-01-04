@@ -1,5 +1,7 @@
 package cn.sabercon.motto.common.zzz;
 
+import cn.sabercon.motto.common.util.EntityUtils;
+import cn.sabercon.motto.common.util.NameUtils;
 import com.oracle.webservices.internal.api.message.ContentType;
 import org.junit.jupiter.api.Test;
 
@@ -15,5 +17,8 @@ class ZTest {
 
     @Test
     void common() {
+        String awdadad = NameUtils.getOssName("awdadad");
+        System.out.println(awdadad);
+        System.out.println(awdadad.length());
     }
 }

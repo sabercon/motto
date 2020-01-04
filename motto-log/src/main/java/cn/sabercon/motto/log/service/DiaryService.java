@@ -3,14 +3,11 @@ package cn.sabercon.motto.log.service;
 import cn.sabercon.motto.common.dto.PageRes;
 import cn.sabercon.motto.common.dto.PageReq;
 import cn.sabercon.motto.common.util.EntityUtils;
-import cn.sabercon.motto.log.component.OssHelper;
 import cn.sabercon.motto.log.dao.DiaryRepository;
-import cn.sabercon.motto.log.dto.DiaryDto;
 import cn.sabercon.motto.log.entity.Diary;
 import cn.sabercon.motto.log.util.LoginUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,61 +23,43 @@ public class DiaryService {
 
     @Autowired
     private DiaryRepository repository;
-    @Autowired
-    private OssHelper ossHelper;
-    @Value("${aliyun.oss.dir.diaryImg}")
-    private String imgPath;
 
-    public void save(DiaryDto dto) {
-        if (dto.getId() == null) {
+    public void save(Diary diaryInfo) {
+        if (diaryInfo.getId() == null) {
             // create
             Diary diary = new Diary();
-            EntityUtils.copyIgnoreEmpty(dto, diary);
+            EntityUtils.copyIgnoreNotCover(diaryInfo, diary);
             diary.setUserId(LoginUtils.getId());
             diary.setDel(0);
             repository.save(diary);
         } else {
             // update
-            Diary diary = repository.getOne(dto.getId());
-            EntityUtils.copyIgnoreEmpty(dto, diary);
+            Diary diary = repository.getOne(diaryInfo.getId());
+            EntityUtils.copyIgnoreNotCover(diaryInfo, diary);
         }
     }
 
     public void delete(Long id) {
-        Diary diary = repository.getOne(id);
-        diary.setDel(1);
+        repository.getOne(id).setDel(1);
     }
 
-    public DiaryDto get(Long id) {
-        Diary diary = repository.getOne(id);
-        return toDto(diary);
+    public Diary get(Long id) {
+        return repository.getOne(id);
     }
 
-    public PageRes<DiaryDto> list(PageReq pageReq) {
+    public PageRes<Diary> list(PageReq pageReq) {
         pageReq.amendAll();
         Page<Diary> diaryPage;
         if (StringUtils.hasLength(pageReq.getEqualValue())) {
             // add query by type
             diaryPage = repository.findByUserIdAndNameLikeAndType(LoginUtils.getId(),
-                    pageReq.getFuzzyValue(), pageReq.getEqualValue(), pageReq.getPageable());
+                    pageReq.getFuzzyValue(), pageReq.getEqualValue(), pageReq.toPageable());
         } else {
-            diaryPage = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.getPageable());
+            diaryPage = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.toPageable());
         }
-        return PageRes.of(diaryPage.map(this::toDtoWithoutText));
+        // do not return text when getting page
+        diaryPage.forEach(diary -> diary.setText(null));
+        return PageRes.of(diaryPage);
     }
 
-    private DiaryDto toDto(Diary diary) {
-        DiaryDto diaryDto = new DiaryDto();
-        BeanUtils.copyProperties(diary, diaryDto);
-        return diaryDto;
-    }
-
-    /**
-     * 删除日记的内容，用于获取列表
-     */
-    private DiaryDto toDtoWithoutText(Diary diary) {
-        DiaryDto diaryDto = toDto(diary);
-        diaryDto.setText(null);
-        return diaryDto;
-    }
 }

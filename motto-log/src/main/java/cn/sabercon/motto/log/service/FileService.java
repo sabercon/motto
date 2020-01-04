@@ -2,10 +2,10 @@ package cn.sabercon.motto.log.service;
 
 import cn.sabercon.motto.common.dto.PageRes;
 import cn.sabercon.motto.common.dto.PageReq;
+import cn.sabercon.motto.common.util.EntityUtils;
 import cn.sabercon.motto.common.util.NameUtils;
 import cn.sabercon.motto.log.component.OssHelper;
 import cn.sabercon.motto.log.dao.FileRepository;
-import cn.sabercon.motto.log.dto.FileDto;
 import cn.sabercon.motto.log.entity.File;
 import cn.sabercon.motto.log.util.LoginUtils;
 import org.springframework.beans.BeanUtils;
@@ -26,38 +26,23 @@ public class FileService {
 
     @Autowired
     private FileRepository repository;
-    @Autowired
-    private OssHelper ossHelper;
-    @Value("${aliyun.oss.dir.file}")
-    private String filePath;
 
-    public void save(MultipartFile file, String name) {
-        String filename = NameUtils.getFilename(file.getOriginalFilename());
-        String url = ossHelper.upload(file, filePath, filename);
-        File fileEntity = new File();
-        fileEntity.setName(name);
-        fileEntity.setUrl(url);
-        fileEntity.setType(file.getContentType());
-        fileEntity.setSize(file.getSize());
-        fileEntity.setDel(0);
-        fileEntity.setUserId(LoginUtils.getId());
-        repository.save(fileEntity);
+    public void save(File fileInfo) {
+        File file = new File();
+        EntityUtils.copyIgnoreNotCover(fileInfo, file);
+        file.setDel(0);
+        file.setUserId(LoginUtils.getId());
+        repository.save(file);
     }
 
     public void delete(Long id) {
-        File file = repository.getOne(id);
-        file.setDel(1);
+        repository.getOne(id).setDel(1);
     }
 
-    public PageRes<FileDto> list(PageReq pageReq) {
+    public PageRes<File> list(PageReq pageReq) {
         pageReq.amendAll();
-        Page<File> filePage = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.getPageable());
-        return PageRes.of(filePage.map(this::toDto));
+        Page<File> page = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.toPageable());
+        return PageRes.of(page);
     }
 
-    private FileDto toDto(File file) {
-        FileDto fileDto = new FileDto();
-        BeanUtils.copyProperties(file, fileDto);
-        return fileDto;
-    }
 }

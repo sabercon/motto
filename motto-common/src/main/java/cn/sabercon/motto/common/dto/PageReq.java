@@ -7,11 +7,13 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.util.StringUtils;
 
 /**
  * 分页请求的实体类
  * 注：排序和查询暂时只支持一项
+ * 更复杂的查询请使用 {@link JpaSpecificationExecutor}
  *
  * @author ywk
  * @date 2020-01-02
@@ -43,11 +45,6 @@ public class PageReq {
      * 排序方向
      */
     Sort.Direction direction;
-
-    /**
-     * 分页查询信息
-     */
-    Pageable pageable;
 
     /**
      * 将 fuzzyField 转为可直接模糊查询的值
@@ -92,11 +89,6 @@ public class PageReq {
         }
     }
 
-    public void createPageable() {
-        Sort sort = Sort.by(direction, sortField);
-        pageable = PageRequest.of(pageNum, pageSize, sort);
-    }
-
     /**
      * 调用所有 amend 方法 和 create 方法
      */
@@ -106,6 +98,13 @@ public class PageReq {
         amendDirection();
         amendPageNum();
         amendPageSize();
-        createPageable();
+    }
+
+    /**
+     * 生成用于 jpa 分页查询的 {@link Pageable}
+     */
+    public Pageable toPageable() {
+        Sort sort = Sort.by(direction, sortField);
+        return PageRequest.of(pageNum, pageSize, sort);
     }
 }

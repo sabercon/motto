@@ -22,8 +22,8 @@ import static cn.sabercon.motto.common.enums.ErrorCode.UNAUTHORIZED;
  * @author ywk
  * @date 2019-10-31
  */
-@Component
 @Slf4j
+@Component
 public class LoginInterceptor implements HandlerInterceptor {
 
     @Autowired

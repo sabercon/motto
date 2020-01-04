@@ -14,10 +14,10 @@ import javax.persistence.Table;
  * @author ywk
  * @date 2019-10-15
  */
-@Entity
-@Table(indexes = {@Index(columnList = "username"), @Index(columnList = "phone")})
 @Data
+@Entity
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(indexes = {@Index(columnList = "username"), @Index(columnList = "phone")})
 public class UserBasic extends BaseEntity {
 
     @Column(nullable = false, unique = true)

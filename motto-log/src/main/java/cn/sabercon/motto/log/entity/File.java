@@ -1,6 +1,8 @@
 package cn.sabercon.motto.log.entity;
 
 import cn.sabercon.motto.common.entity.BaseEntity;
+import cn.sabercon.motto.common.entity.BaseResourceEntity;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -18,23 +20,19 @@ import java.time.LocalDate;
  * @date 2020-01-02
  */
 @Entity
-@Table(indexes = @Index(columnList = "userId"))
 @Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
 @Where(clause = " del = 0 ")
-public class File extends BaseEntity {
-
-    @Column(nullable = false, unique = true)
-    Long userId;
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(indexes = @Index(columnList = "userId"))
+public class File extends BaseResourceEntity {
 
     String name;
 
+    @ApiModelProperty("文件大小，单位为byte")
     Long size;
 
     String type;
 
     String url;
-
-    Integer del;
 
 }

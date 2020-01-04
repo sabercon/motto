@@ -1,6 +1,7 @@
 package cn.sabercon.motto.log.entity;
 
 import cn.sabercon.motto.common.entity.BaseEntity;
+import cn.sabercon.motto.common.entity.BaseResourceEntity;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -15,15 +16,12 @@ import javax.persistence.Table;
  * @author ywk
  * @date 2020-01-03
  */
-@Entity
-@Table(indexes = @Index(columnList = "userId"))
 @Data
-@FieldDefaults(level = AccessLevel.PRIVATE)
+@Entity
 @Where(clause = " del = 0 ")
-public class Diary extends BaseEntity {
-
-    @Column(nullable = false, unique = true)
-    Long userId;
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(indexes = @Index(columnList = "userId"))
+public class Diary extends BaseResourceEntity {
 
     String name;
 
@@ -31,7 +29,5 @@ public class Diary extends BaseEntity {
 
     @Column(columnDefinition = "text")
     String text;
-
-    Integer del;
 
 }

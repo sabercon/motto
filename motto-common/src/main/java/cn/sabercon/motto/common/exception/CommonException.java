@@ -10,8 +10,8 @@ import lombok.Getter;
  * @author ywk
  * @date 2019-10-15
  */
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 public class CommonException extends RuntimeException {
 
     private ErrorCode errorCode;

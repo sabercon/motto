@@ -27,8 +27,8 @@ import java.nio.charset.spi.CharsetProvider;
  * @author ywk
  * @date 2019-12-30
  */
-@Component
 @Slf4j
+@Component
 public class OssHelper {
     @Value("${aliyun.oss.accessKeyId}")
     private String accessKeyId;
@@ -43,27 +43,19 @@ public class OssHelper {
      * 上传文件
      *
      * @param file     要上传的文件
-     * @param dir      OSS的储存目录
-     * @param filename 文件名称，需包含后缀名
+     * @param filename 文件名称，可用斜杆表示目录结构
      * @return 访问文件的url
      */
-    public String upload(MultipartFile file, String dir, String filename) {
-        // 得到文件路径
-        if (!dir.endsWith("/")) {
-            dir += "/";
-        }
-        String filePath = dir + filename;
-        log.info("the upload file path:{}", filePath);
-
+    public String upload(MultipartFile file, String filename) {
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
         try {
-            PutObjectResult result = ossClient.putObject(bucketName, filePath, file.getInputStream());
+            PutObjectResult result = ossClient.putObject(bucketName, filename, file.getInputStream());
         } catch (IOException | ClientException | OSSException e) {
-            log.error("error happened when uploading file, filePath:{}", filePath);
+            log.error("error happened when uploading file, filename:{}", filename);
             throw new CommonException(ErrorCode.UPLOAD_FAIL);
         }
         ossClient.shutdown();
-        return String.format("https://%s.%s/%s", bucketName, endpoint, filePath);
+        return String.format("https://%s.%s/%s", bucketName, endpoint, filename);
     }
 
     /**
@@ -73,7 +65,7 @@ public class OssHelper {
      * @param width 缩略图宽度
      * @return 缩略图的url
      */
-    public String getThumbnail(String url, Integer width) {
+    public static String getThumbnail(String url, Integer width) {
         if (width == null || width < 1) {
             width =150;
         }

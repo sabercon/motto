@@ -32,10 +32,8 @@ aliyun:
     bucketName: motto # oss的存储空间
     maxSize: 100 # 上传文件大小(M)
     dir:
-      avatar: user/avatar/
-      diaryImg: diary/img/
-      pic: resource/pic/
-      file: resource/file/
+      img: img/
+      file: file/
   # 阿里短信配置信息
   sms:
     accessKeyId: LTAIFCfcNOj1amZh
@@ -44,5 +42,5 @@ aliyun:
     templateCode: SMS_175480786 # 模板CODE
 motto:
   user:
-    defaultAvatar: https://motto.oss-cn-shenzhen.aliyuncs.com/user/avatar/takagi.jpg # 默认头像
+    defaultAvatar: https://motto.oss-cn-shenzhen.aliyuncs.com/img/takagi.jpg # 默认头像
 

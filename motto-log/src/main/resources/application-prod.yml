@@ -1,5 +1,5 @@
 server:
-  port: 80
+  port: 8080
   servlet:
     context-path: /api
 logging:
@@ -10,15 +10,15 @@ spring:
     multipart:
       max-file-size: 100MB
   datasource:
-    url: jdbc:mysql://106.53.10.76:3306/motto?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://127.0.0.1:3306/motto?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: sabercon
-    password: 123456
+    password: SaberCon20
   jpa:
     hibernate:
       ddl-auto: update # 开发时可以设置为更新，每次启动会更新数据库
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   redis:
-    host: 106.53.10.76 # Redis服务器地址
+    host: 127.0.0.1 # Redis服务器地址
     port: 6379 # Redis服务器连接端口
     database: 0 # Redis数据库索引（默认为0）
     password: # Redis服务器连接密码（默认为空）
@@ -31,10 +31,8 @@ aliyun:
     bucketName: motto # oss的存储空间
     maxSize: 100 # 上传文件大小(M)
     dir:
-      avatar: user/avatar/
-      diaryImg: diary/img/
-      pic: resource/pic/
-      file: resource/file/
+      img: img/
+      file: file/
   # 阿里短信配置信息
   sms:
     accessKeyId: LTAIFCfcNOj1amZh
@@ -43,5 +41,5 @@ aliyun:
     templateCode: SMS_175480786 # 模板CODE
 motto:
   user:
-    defaultAvatar: https://motto.oss-cn-shenzhen.aliyuncs.com/user/avatar/takagi.jpg # 默认头像
+    defaultAvatar: https://motto.oss-cn-shenzhen.aliyuncs.com/img/takagi.jpg # 默认头像
 

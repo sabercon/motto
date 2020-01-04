@@ -3,7 +3,7 @@ package cn.sabercon.motto.log.controller;
 import cn.sabercon.motto.common.dto.PageRes;
 import cn.sabercon.motto.common.dto.Result;
 import cn.sabercon.motto.common.dto.PageReq;
-import cn.sabercon.motto.log.dto.FileDto;
+import cn.sabercon.motto.log.entity.File;
 import cn.sabercon.motto.log.service.FileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,8 +26,8 @@ public class FileController {
 
     @ApiOperation("上传文件")
     @PostMapping
-    public Result save(MultipartFile file, String name) {
-        service.save(file, name);
+    public Result save(File file) {
+        service.save(file);
         return Result.success();
     }
 
@@ -40,7 +40,7 @@ public class FileController {
 
     @ApiOperation("获取文件列表")
     @GetMapping
-    public Result<PageRes<FileDto>> list(PageReq pageReq) {
+    public Result<PageRes<File>> list(PageReq pageReq) {
         return Result.success(service.list(pageReq));
     }
 

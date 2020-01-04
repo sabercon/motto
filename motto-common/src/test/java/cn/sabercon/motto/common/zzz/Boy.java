@@ -1,5 +1,6 @@
 package cn.sabercon.motto.common.zzz;
 
+import cn.sabercon.motto.common.anno.NotCover;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Boy {
 
+    @NotCover
     private String name;
     private Integer age;
     private Girl girlFriend;

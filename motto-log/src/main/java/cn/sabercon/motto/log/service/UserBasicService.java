@@ -5,7 +5,7 @@ import cn.sabercon.motto.common.util.AssertUtils;
 import cn.sabercon.motto.log.component.SmsHelper;
 import cn.sabercon.motto.log.dao.UserBasicRepository;
 import cn.sabercon.motto.log.dao.UserDetailRepository;
-import cn.sabercon.motto.log.dto.UserBasicDto;
+import cn.sabercon.motto.log.dto.UserReq;
 import cn.sabercon.motto.log.entity.UserBasic;
 import cn.sabercon.motto.log.entity.UserDetail;
 import cn.sabercon.motto.log.util.LoginUtils;
@@ -68,67 +68,67 @@ public class UserBasicService {
                 .build();
     }
 
-    public UserBasicDto get() {
-        UserBasicDto userBasicDto = new UserBasicDto();
-        BeanUtils.copyProperties(getUser(), userBasicDto);
-        userBasicDto.setPassword(null);
-        return userBasicDto;
+    public UserReq get() {
+        UserReq userReq = new UserReq();
+        BeanUtils.copyProperties(getUser(), userReq);
+        userReq.setPassword(null);
+        return userReq;
     }
 
-    public void register(UserBasicDto userBasicDto) {
+    public void register(UserReq userReq) {
         // 校验参数
-        PatternUtils.checkUsername(userBasicDto.getUsername());
-        PatternUtils.checkPassword(userBasicDto.getPassword());
-        PatternUtils.checkPhone(userBasicDto.getPhone());
-        PatternUtils.checkSmsCode(userBasicDto.getSmsCode());
+        PatternUtils.checkUsername(userReq.getUsername());
+        PatternUtils.checkPassword(userReq.getPassword());
+        PatternUtils.checkPhone(userReq.getPhone());
+        PatternUtils.checkSmsCode(userReq.getSmsCode());
         // 校验用户名和电话号唯一性，验证码正确性
-        matchSmsCode(userBasicDto.getPhone(), userBasicDto.getSmsCode(), SMS_REGISTER_PREFIX);
-        AssertUtils.isNull(repository.findByUsername(userBasicDto.getUsername()), USERNAME_EXISTS);
-        AssertUtils.isNull(repository.findByPhone(userBasicDto.getPhone()), PHONE_EXISTS);
+        matchSmsCode(userReq.getPhone(), userReq.getSmsCode(), SMS_REGISTER_PREFIX);
+        AssertUtils.isNull(repository.findByUsername(userReq.getUsername()), USERNAME_EXISTS);
+        AssertUtils.isNull(repository.findByPhone(userReq.getPhone()), PHONE_EXISTS);
         // 新增用户
         UserBasic user = new UserBasic();
-        BeanUtils.copyProperties(userBasicDto, user);
-        user.setPassword(SecureUtil.md5(userBasicDto.getPassword()));
+        BeanUtils.copyProperties(userReq, user);
+        user.setPassword(SecureUtil.md5(userReq.getPassword()));
         user = repository.save(user);
         // 新增用户详细信息，默认昵称为用户名
         UserDetail userDetail = new UserDetail();
         userDetail.setUserId(user.getId());
-        userDetail.setNickname(userBasicDto.getUsername());
+        userDetail.setNickname(userReq.getUsername());
         userDetail.setAvatar(defaultAvatar);
         userDetailRepository.save(userDetail);
     }
 
-    public String login(UserBasicDto userBasicDto) {
+    public String login(UserReq userReq) {
         UserBasic user;
-        if (StringUtils.isEmpty(userBasicDto.getUsername())) {
+        if (StringUtils.isEmpty(userReq.getUsername())) {
             // 验证手机号和验证码
-            PatternUtils.checkPhone(userBasicDto.getPhone());
-            PatternUtils.checkSmsCode(userBasicDto.getSmsCode());
-            user = repository.findByPhone(userBasicDto.getPhone());
+            PatternUtils.checkPhone(userReq.getPhone());
+            PatternUtils.checkSmsCode(userReq.getSmsCode());
+            user = repository.findByPhone(userReq.getPhone());
             AssertUtils.isNotNull(user, USER_NOT_EXISTS);
-            matchSmsCode(userBasicDto.getPhone(), userBasicDto.getSmsCode(), SMS_LOGIN_PREFIX);
+            matchSmsCode(userReq.getPhone(), userReq.getSmsCode(), SMS_LOGIN_PREFIX);
         } else {
             // 验证用户名和密码
-            PatternUtils.checkUsername(userBasicDto.getUsername());
-            PatternUtils.checkPassword(userBasicDto.getPassword());
-            user = repository.findByUsername(userBasicDto.getUsername());
+            PatternUtils.checkUsername(userReq.getUsername());
+            PatternUtils.checkPassword(userReq.getPassword());
+            user = repository.findByUsername(userReq.getUsername());
             AssertUtils.isNotNull(user, USER_NOT_EXISTS);
-            AssertUtils.isTrue(user.getPassword().equals(SecureUtil.md5(userBasicDto.getPassword())), PASSWORD_WRONG);
+            AssertUtils.isTrue(user.getPassword().equals(SecureUtil.md5(userReq.getPassword())), PASSWORD_WRONG);
         }
         refreshUserInRedis(user);
         return generateTokenById(user.getId());
     }
 
-    public void reset(UserBasicDto userBasicDto) {
+    public void reset(UserReq userReq) {
         // 校验参数
-        PatternUtils.checkPassword(userBasicDto.getPassword());
-        PatternUtils.checkPhone(userBasicDto.getPhone());
-        PatternUtils.checkSmsCode(userBasicDto.getSmsCode());
-        UserBasic user = repository.findByPhone(userBasicDto.getPhone());
+        PatternUtils.checkPassword(userReq.getPassword());
+        PatternUtils.checkPhone(userReq.getPhone());
+        PatternUtils.checkSmsCode(userReq.getSmsCode());
+        UserBasic user = repository.findByPhone(userReq.getPhone());
         AssertUtils.isNotNull(user, USER_NOT_EXISTS);
-        matchSmsCode(userBasicDto.getPhone(), userBasicDto.getSmsCode(), SMS_RESET_PREFIX);
+        matchSmsCode(userReq.getPhone(), userReq.getSmsCode(), SMS_RESET_PREFIX);
         // 更新密码
-        user.setPassword(SecureUtil.md5(userBasicDto.getPassword()));
+        user.setPassword(SecureUtil.md5(userReq.getPassword()));
         repository.save(user);
     }
 

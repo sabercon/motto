@@ -32,8 +32,8 @@ public class FileController {
     }
 
     @ApiOperation("删除文件")
-    @DeleteMapping
-    public Result delete(Long id) {
+    @DeleteMapping("${id}")
+    public Result delete(@PathVariable Long id) {
         service.delete(id);
         return Result.success();
     }

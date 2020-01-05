@@ -32,8 +32,8 @@ public class ImageController {
     }
 
     @ApiOperation("删除图片")
-    @DeleteMapping
-    public Result delete(Long id) {
+    @DeleteMapping("${id}")
+    public Result delete(@PathVariable Long id) {
         service.delete(id);
         return Result.success();
     }

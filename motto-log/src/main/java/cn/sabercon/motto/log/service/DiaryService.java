@@ -40,11 +40,11 @@ public class DiaryService {
     }
 
     public void delete(Long id) {
-        repository.getOne(id).setDel(1);
+        repository.findById(id).ifPresent(e -> e.setDel(1));
     }
 
     public Diary get(Long id) {
-        return repository.getOne(id);
+        return repository.findById(id).orElse(null);
     }
 
     @Transactional(readOnly = true)

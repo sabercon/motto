@@ -6,15 +6,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
 import java.beans.FeatureDescriptor;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -41,9 +42,17 @@ public class EntityUtils {
      * 得到实体中带有 {@link NotCover} 的属性名称数组
      */
     private String[] getNotCoverPropertyNames(Object bean) {
-        return Stream.of(bean.getClass().getDeclaredFields())
-                .filter(field -> field.isAnnotationPresent(NotCover.class))
-                .map(Field::getName).toArray(String[]::new);
+        Class clazz = bean.getClass();
+        Set<String> nameSet = new HashSet<>();
+        // use loop to get the properties of superClass
+        while (!clazz.equals(Object.class)) {
+            List<String> names = Stream.of(clazz.getDeclaredFields())
+                    .filter(field -> field.isAnnotationPresent(NotCover.class))
+                    .map(Field::getName).collect(Collectors.toList());
+            nameSet.addAll(names);
+            clazz = clazz.getSuperclass();
+        }
+        return nameSet.toArray(new String[]{});
     }
 
     /**

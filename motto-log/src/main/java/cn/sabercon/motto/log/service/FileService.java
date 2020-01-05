@@ -36,7 +36,7 @@ public class FileService {
     }
 
     public void delete(Long id) {
-        repository.getOne(id).setDel(1);
+        repository.findById(id).ifPresent(e -> e.setDel(1));
     }
 
     public PageRes<File> list(PageReq pageReq) {

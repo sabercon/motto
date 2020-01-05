@@ -31,14 +31,14 @@ public class DiaryController {
     }
 
     @ApiOperation("删除日记")
-    @DeleteMapping("${id}")
+    @DeleteMapping("{id}")
     public Result delete(@PathVariable Long id) {
         service.delete(id);
         return Result.success();
     }
 
     @ApiOperation("获取日记")
-    @GetMapping("${id}")
+    @GetMapping("{id}")
     public Result<Diary> get(@PathVariable Long id) {
         return Result.success(service.get(id));
     }

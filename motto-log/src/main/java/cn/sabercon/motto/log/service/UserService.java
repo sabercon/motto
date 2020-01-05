@@ -57,7 +57,7 @@ public class UserService {
         EntityUtils.copyIgnoreNotCover(dto, userDetail);
         // 更新缓存
         UserDto user = getUser();
-        EntityUtils.copyIgnoreNotCover(dto, user);
+        EntityUtils.copyIgnoreNotCover(userDetail, user);
         refreshUserInRedis(user);
     }
 

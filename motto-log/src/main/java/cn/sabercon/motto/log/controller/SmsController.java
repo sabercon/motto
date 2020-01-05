@@ -48,7 +48,7 @@ public class SmsController {
     @ApiOperation("发送短信验证码")
     @ApiImplicitParam(name = "status", allowableValues = "range[1,6]",
             value = "验证码的发送类型：1-注册，2-登录，3-重置密码，4-修改密码，5-解绑手机，6-绑定手机")
-    @GetMapping("sms/{status}/{phone}")
+    @GetMapping("{status}/{phone}")
     public Result sendCode(@PathVariable Integer status, @PathVariable String phone) {
         PatternUtils.checkPhone(phone);
         // 根据status得到验证码保存到redis时的前缀

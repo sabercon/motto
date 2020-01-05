@@ -1,5 +1,6 @@
 package cn.sabercon.motto.log.entity;
 
+import cn.sabercon.motto.common.anno.NotCover;
 import cn.sabercon.motto.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Data;

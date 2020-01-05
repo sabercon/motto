@@ -33,7 +33,7 @@ public class ImageService {
     }
 
     public void delete(Long id) {
-        repository.findById(id).ifPresent(e -> e.setDel(1));
+        repository.findById(id).filter(e -> e.getUserId().equals(LoginUtils.getId())).ifPresent(e -> e.setDel(1));
     }
 
     public PageRes<Image> list(PageReq pageReq) {

@@ -58,7 +58,7 @@ public class PageReq {
      */
     public void amendSort() {
         if (StringUtils.isEmpty(sortField)) {
-            sortField = "createDate";
+            sortField = "createTime";
         }
     }
 
@@ -67,7 +67,7 @@ public class PageReq {
      */
     public void amendDirection() {
         if (direction == null) {
-            direction = Sort.DEFAULT_DIRECTION;
+            direction = Sort.Direction.DESC;
         }
     }
 

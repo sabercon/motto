@@ -27,6 +27,8 @@ public class Diary extends BaseResourceEntity {
 
     String type;
 
+    String note;
+
     @Column(columnDefinition = "text")
     String text;
 

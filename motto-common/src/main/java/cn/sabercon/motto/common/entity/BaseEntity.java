@@ -36,7 +36,7 @@ public abstract class BaseEntity implements Serializable {
     @NotCover
     @CreationTimestamp
     @Column(updatable = false)
-    private LocalDateTime createDate;
+    private LocalDateTime createTime;
 
 
     /**
@@ -44,5 +44,5 @@ public abstract class BaseEntity implements Serializable {
      */
     @NotCover
     @UpdateTimestamp
-    private LocalDateTime updateDate;
+    private LocalDateTime updateTime;
 }

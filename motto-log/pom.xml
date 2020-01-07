@@ -88,8 +88,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <imageName>motto-log/${project.artifactId}:${project.version}</imageName>
-                    <dockerHost>http://106.53.10.76:2375</dockerHost>
+                    <imageName>${project.artifactId}:${project.version}</imageName>
+<!--                    <dockerHost>http://106.53.10.76:2375</dockerHost>-->
+                    <dockerHost>https://ccr.ccs.tencentyun.com/sabercon/motto</dockerHost>
                     <baseImage>java:8</baseImage>
                     <entryPoint>["java", "-jar","/${project.build.finalName}.jar"]
                     </entryPoint>

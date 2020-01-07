@@ -10,15 +10,15 @@ spring:
     multipart:
       max-file-size: 100MB
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/motto?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://db:3306/motto?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai
     username: sabercon
-    password: SaberCon20
+    password: sabercon20
   jpa:
     hibernate:
       ddl-auto: update # 开发时可以设置为更新，每次启动会更新数据库
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   redis:
-    host: 127.0.0.1 # Redis服务器地址
+    host: redis # Redis服务器地址
     port: 6379 # Redis服务器连接端口
     database: 0 # Redis数据库索引（默认为0）
     password: # Redis服务器连接密码（默认为空）

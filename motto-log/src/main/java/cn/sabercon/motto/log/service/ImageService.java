@@ -5,12 +5,14 @@ import cn.sabercon.motto.common.dto.PageReq;
 import cn.sabercon.motto.common.util.EntityUtils;
 import cn.sabercon.motto.log.component.OssHelper;
 import cn.sabercon.motto.log.dao.ImageRepository;
+import cn.sabercon.motto.log.entity.Diary;
 import cn.sabercon.motto.log.entity.Image;
 import cn.sabercon.motto.log.util.LoginUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 /**
  * @author ywk
@@ -38,7 +40,14 @@ public class ImageService {
 
     public PageRes<Image> list(PageReq pageReq) {
         pageReq.amendAll();
-        Page<Image> page = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.toPageable());
+        Page<Image> page;
+        if (StringUtils.hasLength(pageReq.getEqualValue())) {
+            // query by type
+            page = repository.findByUserIdAndNameLikeAndType(LoginUtils.getId(),
+                    pageReq.getFuzzyValue(), pageReq.getEqualValue(), pageReq.toPageable());
+        } else {
+            page = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.toPageable());
+        }
         return PageRes.of(page);
     }
 }

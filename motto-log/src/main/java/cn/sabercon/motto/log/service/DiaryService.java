@@ -50,17 +50,17 @@ public class DiaryService {
     @Transactional(readOnly = true)
     public PageRes<Diary> list(PageReq pageReq) {
         pageReq.amendAll();
-        Page<Diary> diaryPage;
+        Page<Diary> page;
         if (StringUtils.hasLength(pageReq.getEqualValue())) {
-            // add query by type
-            diaryPage = repository.findByUserIdAndNameLikeAndType(LoginUtils.getId(),
+            // query by type
+            page = repository.findByUserIdAndNameLikeAndType(LoginUtils.getId(),
                     pageReq.getFuzzyValue(), pageReq.getEqualValue(), pageReq.toPageable());
         } else {
-            diaryPage = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.toPageable());
+            page = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.toPageable());
         }
         // no need to return text when getting page
-        diaryPage.forEach(diary -> diary.setText(null));
-        return PageRes.of(diaryPage);
+        page.forEach(diary -> diary.setText(null));
+        return PageRes.of(page);
     }
 
 }

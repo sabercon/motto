@@ -9,9 +9,12 @@ import cn.sabercon.motto.log.entity.Image;
 import cn.sabercon.motto.log.util.LoginUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 /**
  * @author ywk
@@ -48,5 +51,10 @@ public class ImageService {
             page = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.toPageable());
         }
         return PageRes.of(page);
+    }
+
+    public List<Image> listByLimit(Integer start, Integer size) {
+        Long userId = LoginUtils.getId();
+        return repository.listByLimit(userId, start, size);
     }
 }

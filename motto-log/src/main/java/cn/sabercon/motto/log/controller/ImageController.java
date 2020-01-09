@@ -10,6 +10,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author ywk
  * @date 2020-01-03
@@ -41,6 +43,12 @@ public class ImageController {
     @GetMapping
     public Result<PageRes<Image>> list(PageReq pageReq) {
         return Result.success(service.list(pageReq));
+    }
+
+    @ApiOperation("根据limit语法获取图片列表")
+    @GetMapping("{start}/{size}")
+    public Result<List<Image>> listByLimit(@PathVariable Integer start, @PathVariable Integer size) {
+        return Result.success(service.listByLimit(start, size));
     }
 
 }

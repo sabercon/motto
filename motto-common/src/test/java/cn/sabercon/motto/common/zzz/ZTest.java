@@ -1,11 +1,8 @@
 package cn.sabercon.motto.common.zzz;
 
-import cn.sabercon.motto.common.util.EntityUtils;
-import cn.sabercon.motto.common.util.NameUtils;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 /**
  * 通用测试类

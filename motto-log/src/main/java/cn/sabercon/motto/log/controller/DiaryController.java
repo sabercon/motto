@@ -1,8 +1,8 @@
 package cn.sabercon.motto.log.controller;
 
+import cn.sabercon.motto.common.dto.PageReq;
 import cn.sabercon.motto.common.dto.PageRes;
 import cn.sabercon.motto.common.dto.Result;
-import cn.sabercon.motto.common.dto.PageReq;
 import cn.sabercon.motto.log.entity.Diary;
 import cn.sabercon.motto.log.service.DiaryService;
 import io.swagger.annotations.Api;

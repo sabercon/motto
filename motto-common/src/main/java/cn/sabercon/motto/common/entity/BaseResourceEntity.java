@@ -3,12 +3,9 @@ package cn.sabercon.motto.common.entity;
 import cn.sabercon.motto.common.anno.NotCover;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
 
 /**
  * 扩展的基础实体类，增加了用户 id 和删除标记

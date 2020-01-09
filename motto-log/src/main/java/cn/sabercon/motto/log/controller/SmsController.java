@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import static cn.sabercon.motto.log.component.SmsHelper.*;
-import static cn.sabercon.motto.log.component.SmsHelper.SMS_BIND_PREFIX;
 
 /**
  * @author ywk

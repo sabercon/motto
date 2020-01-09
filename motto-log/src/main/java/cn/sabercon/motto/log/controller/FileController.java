@@ -1,15 +1,14 @@
 package cn.sabercon.motto.log.controller;
 
+import cn.sabercon.motto.common.dto.PageReq;
 import cn.sabercon.motto.common.dto.PageRes;
 import cn.sabercon.motto.common.dto.Result;
-import cn.sabercon.motto.common.dto.PageReq;
 import cn.sabercon.motto.log.entity.File;
 import cn.sabercon.motto.log.service.FileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author ywk

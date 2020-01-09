@@ -3,7 +3,6 @@ package cn.sabercon.motto.log.entity;
 import cn.sabercon.motto.common.entity.BaseEntity;
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.Column;

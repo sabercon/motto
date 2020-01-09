@@ -1,19 +1,15 @@
 package cn.sabercon.motto.log.entity;
 
-import cn.sabercon.motto.common.entity.BaseEntity;
 import cn.sabercon.motto.common.entity.BaseResourceEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AccessLevel;
 import lombok.Data;
-import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import org.hibernate.annotations.Where;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Index;
 import javax.persistence.Table;
-import java.time.LocalDate;
 
 /**
  * @author ywk

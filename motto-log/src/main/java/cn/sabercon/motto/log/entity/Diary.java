@@ -1,6 +1,5 @@
 package cn.sabercon.motto.log.entity;
 
-import cn.sabercon.motto.common.entity.BaseEntity;
 import cn.sabercon.motto.common.entity.BaseResourceEntity;
 import lombok.AccessLevel;
 import lombok.Data;

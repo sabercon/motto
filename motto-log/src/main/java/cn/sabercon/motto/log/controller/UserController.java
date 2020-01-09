@@ -2,8 +2,8 @@ package cn.sabercon.motto.log.controller;
 
 import cn.sabercon.motto.common.dto.Result;
 import cn.sabercon.motto.common.util.CookieUtils;
-import cn.sabercon.motto.log.dto.UserReq;
 import cn.sabercon.motto.log.dto.UserDto;
+import cn.sabercon.motto.log.dto.UserReq;
 import cn.sabercon.motto.log.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;

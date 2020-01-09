@@ -1,12 +1,11 @@
 package cn.sabercon.motto.log.service;
 
-import cn.sabercon.motto.common.dto.PageRes;
 import cn.sabercon.motto.common.dto.PageReq;
+import cn.sabercon.motto.common.dto.PageRes;
 import cn.sabercon.motto.common.util.EntityUtils;
 import cn.sabercon.motto.log.dao.DiaryRepository;
 import cn.sabercon.motto.log.entity.Diary;
 import cn.sabercon.motto.log.util.LoginUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -34,8 +33,8 @@ public class DiaryService {
             repository.save(diary);
         } else {
             // update
-            Diary diary = repository.getOne(diaryInfo.getId());
-            EntityUtils.copyIgnoreNotCover(diaryInfo, diary);
+            repository.findById(diaryInfo.getId()).filter(e -> e.getUserId().equals(LoginUtils.getId()))
+                    .ifPresent(diary -> EntityUtils.copyIgnoreNotCover(diaryInfo, diary));
         }
     }
 

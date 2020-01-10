@@ -57,7 +57,7 @@ public class OssController {
     @PostMapping("file")
     public Result<String> uploadFile(MultipartFile file) {
         String filename = NameUtils.getOssName(file.getOriginalFilename());
-        String url = ossHelper.upload(file, filePath + filename);
+        String url = ossHelper.uploadFile(file, filePath + filename);
         return Result.success(url);
     }
 
@@ -66,7 +66,7 @@ public class OssController {
     public Result<String> uploadImg(MultipartFile img) {
         AssertUtils.isTrue(PIC_TYPE_LIST.contains(img.getContentType()), ErrorCode.IMG_TYPE_WRONG);
         String imgName = NameUtils.getOssName(img.getOriginalFilename());
-        String url = ossHelper.upload(img, imgPath + imgName);
+        String url = ossHelper.uploadImg(img, imgPath + imgName);
         return Result.success(url);
     }
 

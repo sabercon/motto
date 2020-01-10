@@ -6,6 +6,7 @@ import com.aliyun.oss.ClientException;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.OSSException;
+import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,24 +32,47 @@ public class OssHelper {
     private String endpoint;
     @Value("${aliyun.oss.bucketName}")
     private String bucketName;
+    @Value("${aliyun.oss.accessDomain}")
+    private String accessDomain;
 
     /**
      * 上传文件
      *
      * @param file     要上传的文件
      * @param filename 文件名称，可用斜杆表示目录结构
+     * @param metadata 要设置的 http 头信息
      * @return 访问文件的url
      */
-    public String upload(MultipartFile file, String filename) {
+    public String upload(MultipartFile file, String filename, ObjectMetadata metadata) {
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
         try {
-            PutObjectResult result = ossClient.putObject(bucketName, filename, file.getInputStream());
+            PutObjectResult result = ossClient.putObject(bucketName, filename, file.getInputStream(), metadata);
         } catch (IOException | ClientException | OSSException e) {
             log.error("error happened when uploading file, filename:{}", filename);
             throw new CommonException(ErrorCode.UPLOAD_FAIL);
         }
         ossClient.shutdown();
-        return String.format("https://%s.%s/%s", bucketName, endpoint, filename);
+        return accessDomain + filename;
+    }
+
+    /**
+     * 上传可下载的文件
+     */
+    public String uploadFile(MultipartFile file, String filename) {
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentType(file.getContentType());
+        metadata.setContentDisposition("attachment");
+        return upload(file, filename, metadata);
+    }
+
+    /**
+     * 上传可浏览的图像等文件
+     */
+    public String uploadImg(MultipartFile file, String filename) {
+        ObjectMetadata metadata = new ObjectMetadata();
+        metadata.setContentType(file.getContentType());
+        metadata.setContentDisposition("inline");
+        return upload(file, filename, metadata);
     }
 
     /**

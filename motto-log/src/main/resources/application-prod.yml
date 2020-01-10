@@ -29,7 +29,7 @@ aliyun:
     accessKeySecret: YLXDCGqwn2GzzrQBjIcTRg1gIWDIk9 # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
     endpoint: oss-cn-shenzhen.aliyuncs.com # oss对外服务的访问域名
     bucketName: motto # oss的存储空间
-    maxSize: 100 # 上传文件大小(M)
+    accessDomain: http://oss.sabercon.cn/ # 自定义的访问域名
     dir:
       img: img/
       file: file/
@@ -41,5 +41,5 @@ aliyun:
     templateCode: SMS_175480786 # 模板CODE
 motto:
   user:
-    defaultAvatar: https://motto.oss-cn-shenzhen.aliyuncs.com/img/takagi.jpg # 默认头像
+    defaultAvatar: http://oss.sabercon.cn/img/takagi.jpg # 默认头像
 

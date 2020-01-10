@@ -19,6 +19,6 @@ public interface ImageRepository extends BaseJpaRepository<Image> {
 
     Page<Image> findByUserIdAndNameLikeAndType(Long userId, String name, String type, Pageable pageable);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM `image` WHERE `user_id` = ?1 AND `del` = 0 ORDER BY `id` DESC LIMIT ?2, ?3")
+    @Query(nativeQuery = true, value = "SELECT * FROM `image` WHERE `user_id` = ?1 AND `del` = 0 ORDER BY `create_time` DESC LIMIT ?2, ?3")
     List<Image> listByLimit(Long userId, Integer start, Integer size);
 }

@@ -102,9 +102,10 @@ public class PageReq {
 
     /**
      * 生成用于 jpa 分页查询的 {@link Pageable}
+     * 默认会最后按id排序以防止查询结果不一致
      */
     public Pageable toPageable() {
         Sort sort = Sort.by(direction, sortField);
-        return PageRequest.of(pageNum, pageSize, sort);
+        return PageRequest.of(pageNum, pageSize, sort.and(Sort.by(Sort.Direction.DESC, "id")));
     }
 }

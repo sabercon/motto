@@ -3,8 +3,8 @@ package cn.sabercon.motto.log.service;
 import cn.sabercon.motto.common.dto.PageReq;
 import cn.sabercon.motto.common.dto.PageRes;
 import cn.sabercon.motto.common.util.EntityUtils;
-import cn.sabercon.motto.log.dao.DiaryRepository;
-import cn.sabercon.motto.log.entity.Diary;
+import cn.sabercon.motto.log.dao.ArticleRepository;
+import cn.sabercon.motto.log.entity.Article;
 import cn.sabercon.motto.log.util.LoginUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,23 +18,23 @@ import org.springframework.util.StringUtils;
  */
 @Service
 @Transactional
-public class DiaryService {
+public class ArticleService {
 
     @Autowired
-    private DiaryRepository repository;
+    private ArticleRepository repository;
 
-    public void save(Diary diaryInfo) {
-        if (diaryInfo.getId() == null) {
+    public void save(Article articleInfo) {
+        if (articleInfo.getId() == null) {
             // create
-            Diary diary = new Diary();
-            EntityUtils.copyIgnoreNotCover(diaryInfo, diary);
-            diary.setUserId(LoginUtils.getId());
-            diary.setDel(0);
-            repository.save(diary);
+            Article article = new Article();
+            EntityUtils.copyIgnoreNotCover(articleInfo, article);
+            article.setUserId(LoginUtils.getId());
+            article.setDel(0);
+            repository.save(article);
         } else {
             // update
-            repository.findById(diaryInfo.getId()).filter(e -> e.getUserId().equals(LoginUtils.getId()))
-                    .ifPresent(diary -> EntityUtils.copyIgnoreNotCover(diaryInfo, diary));
+            repository.findById(articleInfo.getId()).filter(e -> e.getUserId().equals(LoginUtils.getId()))
+                    .ifPresent(article -> EntityUtils.copyIgnoreNotCover(articleInfo, article));
         }
     }
 
@@ -42,23 +42,26 @@ public class DiaryService {
         repository.findById(id).filter(e -> e.getUserId().equals(LoginUtils.getId())).ifPresent(e -> e.setDel(1));
     }
 
-    public Diary get(Long id) {
+    public Article get(Long id) {
         return repository.findById(id).filter(e -> e.getUserId().equals(LoginUtils.getId())).orElse(null);
     }
 
     @Transactional(readOnly = true)
-    public PageRes<Diary> list(PageReq pageReq) {
+    public PageRes<Article> list(PageReq pageReq) {
         pageReq.amendAll();
-        Page<Diary> page;
+        Page<Article> page;
         if (StringUtils.hasLength(pageReq.getEqualValue())) {
             // query by type
-            page = repository.findByUserIdAndNameLikeAndType(LoginUtils.getId(),
+            page = repository.findByUserIdAndTitleLikeAndType(LoginUtils.getId(),
                     pageReq.getFuzzyValue(), pageReq.getEqualValue(), pageReq.toPageable());
         } else {
-            page = repository.findByUserIdAndNameLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.toPageable());
+            page = repository.findByUserIdAndTitleLike(LoginUtils.getId(), pageReq.getFuzzyValue(), pageReq.toPageable());
         }
         // no need to return text when getting page
-        page.forEach(diary -> diary.setText(null));
+        page.forEach(article -> {
+            article.setText(null);
+            article.setRawJson(null);
+        });
         return PageRes.of(page);
     }
 

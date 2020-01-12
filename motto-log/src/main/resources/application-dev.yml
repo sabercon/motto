@@ -32,8 +32,8 @@ aliyun:
     bucketName: motto # oss的存储空间
     accessDomain: http://oss.sabercon.cn/ # 自定义的访问域名
     dir:
-      img: img/
-      file: file/
+      img: tmp/
+      file: tmp/
   # 阿里短信配置信息
   sms:
     accessKeyId: LTAIFCfcNOj1amZh
@@ -42,5 +42,5 @@ aliyun:
     templateCode: SMS_175480786 # 模板CODE
 motto:
   user:
-    defaultAvatar: http://oss.sabercon.cn/img/takagi.jpg # 默认头像
+    defaultAvatar: http://oss.sabercon.cn/base/pika.jfif # 默认头像
 

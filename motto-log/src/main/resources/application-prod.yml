@@ -41,5 +41,5 @@ aliyun:
     templateCode: SMS_175480786 # 模板CODE
 motto:
   user:
-    defaultAvatar: http://oss.sabercon.cn/img/takagi.jpg # 默认头像
+    defaultAvatar: http://oss.sabercon.cn/base/pika.jfif # 默认头像
 

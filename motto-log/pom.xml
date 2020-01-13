@@ -74,6 +74,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <!--使用私有仓库部署，存在docker被入侵危险-->
             <!--            <plugin>-->
             <!--                <groupId>com.spotify</groupId>-->
             <!--                <artifactId>docker-maven-plugin</artifactId>-->

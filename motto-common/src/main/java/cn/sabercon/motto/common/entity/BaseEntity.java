@@ -35,7 +35,6 @@ public abstract class BaseEntity implements Serializable {
     @Column(updatable = false)
     private LocalDateTime createTime;
 
-
     /**
      * 更新时间
      */

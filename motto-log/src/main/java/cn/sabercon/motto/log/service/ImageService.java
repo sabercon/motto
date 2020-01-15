@@ -7,9 +7,9 @@ import cn.sabercon.motto.log.component.OssHelper;
 import cn.sabercon.motto.log.dao.ImageRepository;
 import cn.sabercon.motto.log.entity.Image;
 import cn.sabercon.motto.log.util.LoginUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -22,6 +22,7 @@ import java.util.List;
  */
 @Service
 @Transactional
+@Slf4j
 public class ImageService {
 
     @Autowired

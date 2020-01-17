@@ -11,6 +11,7 @@ import java.util.TimeZone;
 public class MottoLogApplication {
 
     public static void main(String[] args) {
+        // 解决放到服务器上时出现的时区问题
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
         SpringApplication.run(MottoLogApplication.class, args);
     }

@@ -10,6 +10,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.util.StringUtils;
 
+import java.io.Serializable;
+
 /**
  * 分页请求的实体类
  * 注：排序和查询暂时只支持一项
@@ -20,7 +22,9 @@ import org.springframework.util.StringUtils;
  */
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PageReq {
+public class PageReq implements Serializable {
+
+    private static final long serialVersionUID = -3506120969187425400L;
 
     Integer pageNum;
 

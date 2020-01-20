@@ -3,6 +3,7 @@ package cn.sabercon.motto.common.dto;
 import lombok.Data;
 import org.springframework.data.domain.Page;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,8 +13,9 @@ import java.util.List;
  * @date 2019-10-15
  */
 @Data
-public class PageRes<T> {
+public class PageRes<T> implements Serializable {
 
+    private static final long serialVersionUID = -6601887655666060827L;
     /**
      * 当前页码
      */

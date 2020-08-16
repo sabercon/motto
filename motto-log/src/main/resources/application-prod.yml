@@ -26,7 +26,7 @@ aliyun:
   # OSS相关配置信息
   oss:
     accessKeyId: LTAIFCfcNOj1amZh # 访问身份验证中用到用户标识
-    accessKeySecret: YLXDCGqwn2GzzrQBjIcTRg1gIWDIk9 # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
+    accessKeySecret: XXX # 用户用于加密签名字符串和oss用来验证签名字符串的密钥
     endpoint: oss-cn-shenzhen.aliyuncs.com # oss对外服务的访问域名
     bucketName: motto # oss的存储空间
     accessDomain: http://oss.sabercon.cn/ # 自定义的访问域名
@@ -36,7 +36,7 @@ aliyun:
   # 阿里短信配置信息
   sms:
     accessKeyId: LTAIFCfcNOj1amZh
-    accessKeySecret: YLXDCGqwn2GzzrQBjIcTRg1gIWDIk9
+    accessKeySecret: XXX
     signName: SaberCon # 签名名称
     templateCode: SMS_175480786 # 模板CODE
 motto:
